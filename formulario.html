@@ -18,7 +18,6 @@
   --blue-mid:#bfdbfe;
   --green:   #059669;
   --green-bg:#f0fdf4;
-  --green-mid:#bbf7d0;
   --orange:  #d97706;
   --orange-bg:#fffbeb;
   --red:     #dc2626;
@@ -35,11 +34,36 @@ body{
   min-height:100vh;padding:2rem 1rem 6rem;
 }
 
-/* ── HEADER ── */
-.page-header{
-  max-width:800px;margin:0 auto 2rem;
-  text-align:center;
+/* ── LOADING SCREEN ── */
+.loading-screen{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:999;transition:opacity .4s;
 }
+.loading-screen.hidden{opacity:0;pointer-events:none;}
+.loading-spinner{
+  width:44px;height:44px;border-radius:50%;
+  border:4px solid var(--blue-mid);
+  border-top-color:var(--blue);
+  animation:spin .8s linear infinite;
+  margin-bottom:1rem;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.loading-text{font-size:.88rem;color:var(--dim);font-weight:500;}
+.loading-sub{font-size:.75rem;color:var(--border2);margin-top:.3rem;}
+
+/* ── ERROR SCREEN ── */
+.error-screen{
+  display:none;max-width:500px;margin:4rem auto;
+  text-align:center;padding:2.5rem;
+  background:var(--white);border-radius:16px;
+  border:1px solid var(--border);
+}
+.error-screen.show{display:block;}
+
+/* ── HEADER ── */
+.page-header{max-width:800px;margin:0 auto 2rem;}
 .header-card{
   background:var(--white);border-radius:18px;
   box-shadow:var(--shadow-lg);overflow:hidden;
@@ -55,24 +79,25 @@ body{
 }
 .logo-dot{
   width:10px;height:10px;border-radius:50%;
-  background:var(--blue);
-  box-shadow:0 0 10px rgba(37,99,235,.4);
+  background:var(--blue);box-shadow:0 0 10px rgba(37,99,235,.4);
 }
-.header-title{
-  font-size:1.5rem;font-weight:700;
-  color:var(--text);letter-spacing:-.02em;
-}
-.header-sub{
-  font-size:.88rem;color:var(--dim);
-  margin-top:.35rem;line-height:1.5;
+.header-title{font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;}
+.header-sub{font-size:.88rem;color:var(--dim);margin-top:.35rem;line-height:1.5;}
+
+/* ── SHEETS BADGE ── */
+.sheets-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  margin-top:.8rem;padding:.35rem .85rem;
+  border-radius:999px;background:var(--green-bg);
+  border:1px solid #bbf7d0;font-size:.75rem;
+  color:var(--green);font-weight:600;
 }
 
 /* ── CARD ── */
 .card{
   max-width:800px;margin:0 auto 1.2rem;
   background:var(--white);border-radius:16px;
-  border:1px solid var(--border);box-shadow:var(--shadow);
-  overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;
 }
 .card-head{
   padding:.9rem 1.5rem;border-bottom:1px solid var(--border);
@@ -90,10 +115,7 @@ body{
 /* ── FIELDS ── */
 .field{margin-bottom:1rem;}
 .field:last-child{margin-bottom:0;}
-.field-label{
-  display:block;font-size:.79rem;font-weight:600;
-  color:var(--text);margin-bottom:.38rem;
-}
+.field-label{display:block;font-size:.79rem;font-weight:600;color:var(--text);margin-bottom:.38rem;}
 .req{color:var(--red);}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
@@ -103,8 +125,7 @@ select.fi,input.fi,textarea.fi{
   width:100%;padding:.62rem .95rem;
   border:1.5px solid var(--border2);border-radius:9px;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:.87rem;
-  color:var(--text);background:var(--bg);outline:none;
-  transition:all .2s;
+  color:var(--text);background:var(--bg);outline:none;transition:all .2s;
 }
 select.fi{
   appearance:none;
@@ -119,12 +140,10 @@ select.fi:focus,input.fi:focus,textarea.fi:focus{
 input.fi[readonly]{opacity:.65;cursor:not-allowed;background:var(--bg);}
 textarea.fi{min-height:70px;resize:vertical;}
 
-/* ── PROFESOR SELECTOR ── */
+/* ── PROFESOR ── */
 .prof-select-wrap select.fi{
-  font-size:.95rem;font-weight:600;
-  border-width:2px;border-color:var(--blue);
-  background-color:var(--white);
-  box-shadow:0 0 0 4px rgba(37,99,235,.08);
+  font-size:.95rem;font-weight:600;border-width:2px;border-color:var(--blue);
+  background-color:var(--white);box-shadow:0 0 0 4px rgba(37,99,235,.08);
   padding:.75rem 2.5rem .75rem 1rem;
 }
 .loading-bar{
@@ -138,19 +157,17 @@ textarea.fi{min-height:70px;resize:vertical;}
   transition:width .5s ease;
 }
 .prof-tag{
-  display:none;margin-top:.6rem;
-  padding:.45rem .9rem;border-radius:999px;
+  display:none;margin-top:.6rem;padding:.45rem .9rem;border-radius:999px;
   background:var(--blue-bg);border:1px solid var(--blue-mid);
   font-size:.78rem;color:var(--blue);font-weight:600;
   align-items:center;gap:.4rem;
 }
 .prof-tag.show{display:inline-flex;}
 
-/* ── COURSES AREA ── */
+/* ── PLACEHOLDER ── */
 .courses-placeholder{
-  max-width:800px;margin:0 auto 1.2rem;
-  padding:2.5rem 1rem;text-align:center;
-  color:var(--dim);font-size:.88rem;
+  max-width:800px;margin:0 auto 1.2rem;padding:2.5rem 1rem;
+  text-align:center;color:var(--dim);font-size:.88rem;
   background:var(--white);border-radius:16px;
   border:1.5px dashed var(--border2);
 }
@@ -160,94 +177,68 @@ textarea.fi{min-height:70px;resize:vertical;}
 .course-card{
   max-width:800px;margin:0 auto 1.2rem;
   background:var(--white);border-radius:16px;
-  border:1px solid var(--border);box-shadow:var(--shadow);
-  overflow:hidden;
+  border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;
   opacity:0;transform:translateY(14px);
   transition:opacity .3s ease,transform .3s ease;
 }
 .course-card.visible{opacity:1;transform:translateY(0);}
-
 .course-head{
-  padding:1rem 1.5rem;
-  display:flex;align-items:center;gap:.9rem;
+  padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;
   border-bottom:1px solid var(--border);
   background:linear-gradient(135deg,#eff6ff,#f8fafc);
 }
 .course-num{
-  width:34px;height:34px;border-radius:10px;
-  background:var(--blue);color:#fff;
+  width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;
   font-size:.82rem;font-weight:800;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
 }
 .course-name-txt{font-weight:700;font-size:.93rem;color:var(--text);}
-.course-code-txt{
-  font-family:'JetBrains Mono',monospace;
-  font-size:.72rem;color:var(--dim);margin-top:.12rem;
-}
+.course-code-txt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--dim);margin-top:.12rem;}
 .course-pills{display:flex;gap:.4rem;margin-left:auto;flex-wrap:wrap;}
-.pill{
-  padding:.2rem .65rem;border-radius:999px;
-  font-size:.7rem;font-weight:700;white-space:nowrap;
-}
+.pill{padding:.2rem .65rem;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;}
 .pill-blue  {background:var(--blue-bg);color:var(--blue);}
 .pill-green {background:var(--green-bg);color:var(--green);}
 .pill-purple{background:var(--purple-bg);color:var(--purple);}
 .pill-grey  {background:#f1f5f9;color:var(--dim);}
-
 .course-body{padding:1.5rem;}
 
-/* Auto-filled notice */
 .auto-notice{
-  padding:.5rem .85rem;background:var(--blue-bg);
-  border-radius:7px;font-size:.73rem;color:var(--blue);
-  margin-bottom:1rem;display:flex;align-items:center;gap:.4rem;
+  padding:.5rem .85rem;background:var(--green-bg);border-radius:7px;
+  font-size:.73rem;color:var(--green);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.4rem;
 }
 
-/* ── SECTION DIVIDERS ── */
 .sec-title{
-  font-size:.72rem;font-weight:700;letter-spacing:.08em;
-  text-transform:uppercase;padding-bottom:.5rem;
-  border-bottom:2px solid;margin-bottom:.9rem;
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding-bottom:.5rem;border-bottom:2px solid;margin-bottom:.9rem;
 }
-.sec-blue  {color:var(--blue);border-color:var(--blue-bg);}
-.sec-green {color:var(--green);border-color:var(--green-bg);}
-.sec-grey  {color:var(--dim);border-color:var(--border);}
+.sec-blue {color:var(--blue);border-color:var(--blue-bg);}
+.sec-grey {color:var(--dim);border-color:var(--border);}
 
-/* ── STUDENT ROWS ── */
+/* ── STUDENTS ── */
 .student-row{
-  display:grid;
-  grid-template-columns:1.8fr 1.1fr 1.3fr 34px;
-  gap:.6rem;align-items:end;
-  padding:.75rem;border-radius:9px;
-  background:var(--bg);border:1px solid var(--border);
-  margin-bottom:.6rem;
+  display:grid;grid-template-columns:1.8fr 1.1fr 1.3fr 34px;
+  gap:.6rem;align-items:end;padding:.75rem;border-radius:9px;
+  background:var(--bg);border:1px solid var(--border);margin-bottom:.6rem;
 }
-.s-label{
-  font-size:.71rem;font-weight:600;
-  color:var(--dim);margin-bottom:.3rem;display:block;
-}
+.s-label{font-size:.71rem;font-weight:600;color:var(--dim);margin-bottom:.3rem;display:block;}
 .remove-btn{
   width:32px;height:32px;border-radius:8px;border:none;
-  background:var(--red-bg);color:var(--red);
-  cursor:pointer;font-size:.85rem;
+  background:var(--red-bg);color:var(--red);cursor:pointer;font-size:.85rem;
   display:flex;align-items:center;justify-content:center;
   transition:all .15s;flex-shrink:0;align-self:flex-end;
 }
 .remove-btn:hover{background:var(--red);color:#fff;}
 .add-student-btn{
   display:inline-flex;align-items:center;gap:.4rem;
-  padding:.5rem .9rem;border-radius:8px;
-  border:1.5px dashed var(--blue);color:var(--blue);
-  background:var(--blue-bg);font-size:.78rem;font-weight:600;
-  cursor:pointer;transition:all .2s;font-family:inherit;
-  margin-top:.3rem;
+  padding:.5rem .9rem;border-radius:8px;border:1.5px dashed var(--blue);
+  color:var(--blue);background:var(--blue-bg);font-size:.78rem;font-weight:600;
+  cursor:pointer;transition:all .2s;font-family:inherit;margin-top:.3rem;
 }
 .add-student-btn:hover{background:var(--blue);color:#fff;}
 
 /* ── SUBMIT ── */
-.submit-wrap{
-  max-width:800px;margin:1.5rem auto 0;
-}
+.submit-wrap{max-width:800px;margin:1.5rem auto 0;}
 .submit-btn{
   width:100%;padding:.95rem;border-radius:12px;border:none;
   background:var(--blue);color:#fff;font-family:inherit;
@@ -258,29 +249,23 @@ textarea.fi{min-height:70px;resize:vertical;}
 }
 .submit-btn:hover{background:#1d4ed8;transform:translateY(-1px);}
 .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
-.submit-note{
-  text-align:center;font-size:.74rem;
-  color:var(--dim);margin-top:.6rem;
-}
+.submit-note{text-align:center;font-size:.74rem;color:var(--dim);margin-top:.6rem;}
 
 /* ── TOAST ── */
 .toast{
   position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);
-  padding:.75rem 1.4rem;border-radius:10px;
-  font-size:.85rem;font-weight:600;
-  opacity:0;transition:all .3s;z-index:999;
-  pointer-events:none;white-space:nowrap;
+  padding:.75rem 1.4rem;border-radius:10px;font-size:.85rem;font-weight:600;
+  opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap;
   box-shadow:0 8px 24px rgba(15,23,42,.18);
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast.ok {background:var(--green);color:#fff;}
 .toast.err{background:var(--red);color:#fff;}
 
-/* ── SUCCESS SCREEN ── */
+/* ── SUCCESS ── */
 .success-screen{
-  display:none;max-width:800px;margin:0 auto;
-  text-align:center;padding:3rem 2rem;
-  background:var(--white);border-radius:18px;
+  display:none;max-width:800px;margin:0 auto;text-align:center;
+  padding:3rem 2rem;background:var(--white);border-radius:18px;
   border:1px solid var(--border);box-shadow:var(--shadow-lg);
 }
 .success-screen.show{display:block;}
@@ -288,11 +273,10 @@ textarea.fi{min-height:70px;resize:vertical;}
 .success-title{font-size:1.4rem;font-weight:700;color:var(--green);margin-bottom:.5rem;}
 .success-sub{font-size:.88rem;color:var(--dim);line-height:1.6;}
 .success-btn{
-  display:inline-flex;align-items:center;gap:.5rem;
-  margin-top:1.5rem;padding:.7rem 1.5rem;
-  border-radius:10px;background:var(--blue);color:#fff;
-  font-family:inherit;font-size:.88rem;font-weight:700;
-  border:none;cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;
+  padding:.7rem 1.5rem;border-radius:10px;background:var(--blue);color:#fff;
+  font-family:inherit;font-size:.88rem;font-weight:700;border:none;
+  cursor:pointer;transition:all .2s;
 }
 .success-btn:hover{background:#1d4ed8;}
 
@@ -305,261 +289,194 @@ textarea.fi{min-height:70px;resize:vertical;}
 </head>
 <body>
 
+<!-- ═══ LOADING SCREEN ═══ -->
+<div class="loading-screen" id="loading-screen">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">Cargando datos desde la hoja de cálculo...</div>
+  <div class="loading-sub">Esto toma solo unos segundos</div>
+</div>
+
 <!-- ═══ TOAST ═══ -->
 <div class="toast" id="toast"></div>
 
-<!-- ═══ HEADER ═══ -->
-<div class="page-header">
-  <div class="header-card">
-    <div class="header-stripe"></div>
-    <div class="header-body">
-      <div class="header-logo">
-        <div class="logo-dot"></div>
-        <span style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">EDECA — UNA</span>
-        <div class="logo-dot"></div>
-      </div>
-      <div class="header-title">Registro de Adecuaciones Estudiantiles</div>
-      <div class="header-sub">
-        Seleccione el profesor para cargar automáticamente sus cursos del ciclo activo.<br>
-        Complete los estudiantes con adecuación en cada curso y envíe el formulario.
-      </div>
-    </div>
+<!-- ═══ ERROR SCREEN ═══ -->
+<div class="error-screen" id="error-screen">
+  <div style="font-size:2.5rem;margin-bottom:1rem">⚠️</div>
+  <div style="font-weight:700;font-size:1.1rem;margin-bottom:.5rem;color:var(--red)">No se pudo cargar la información</div>
+  <div style="font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:1.5rem">
+    Verifique su conexión a internet e intente recargar la página.<br>
+    Si el problema persiste, contacte al administrador del sistema.
   </div>
-</div>
-
-<!-- ═══ CICLO ═══ -->
-<div class="card" id="section-ciclo">
-  <div class="card-head">
-    <div class="card-icon" style="background:#eff6ff">📅</div>
-    <div>
-      <div class="card-title">Ciclo lectivo</div>
-      <div class="card-sub">Período correspondiente a esta notificación</div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="field-row">
-      <div class="field">
-        <label class="field-label">Ciclo <span class="req">*</span></label>
-        <select class="fi" id="ciclo">
-          <option value="">— Seleccione —</option>
-          <option value="I Ciclo (Ene-Jun)">I Ciclo (Enero – Junio)</option>
-          <option value="II Ciclo (Jul-Nov)">II Ciclo (Julio – Noviembre)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label class="field-label">Año <span class="req">*</span></label>
-        <select class="fi" id="anio">
-          <option value="">— Seleccione —</option>
-          <option value="2025">2025</option>
-          <option value="2026">2026</option>
-          <option value="2027">2027</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ PROFESOR ═══ -->
-<div class="card" id="section-profesor">
-  <div class="card-head">
-    <div class="card-icon" style="background:#f0fdf4">🧑‍🏫</div>
-    <div>
-      <div class="card-title">Seleccionar profesor</div>
-      <div class="card-sub">Al seleccionar se cargan automáticamente sus cursos asignados</div>
-    </div>
-  </div>
-  <div class="card-body">
-    <div class="field">
-      <label class="field-label">Nombre del profesor <span class="req">*</span></label>
-      <div class="prof-select-wrap">
-        <select class="fi" id="prof-select" onchange="onProfChange()">
-          <option value="">— Seleccione un profesor —</option>
-          <option value="Ronny Villalobos Quesada">Ronny Villalobos Quesada</option>
-          <option value="Sergio Molina Brenes">Sergio Molina Brenes</option>
-          <option value="Federico Alice Pérez">Federico Alice Pérez</option>
-          <option value="María Chaves Rodríguez">María Chaves Rodríguez</option>
-          <option value="Gustavo Vargas Solís">Gustavo Vargas Solís</option>
-          <option value="Alina Aguilar Mora">Alina Aguilar Mora</option>
-          <option value="Albert Morera Jiménez">Albert Morera Jiménez</option>
-          <option value="Ernesto Montero Castro">Ernesto Montero Castro</option>
-          <option value="María Loria Hernández">María Loria Hernández</option>
-          <option value="Nancy Zamora Ulate">Nancy Zamora Ulate</option>
-          <option value="Vanessa Valerio Brenes">Vanessa Valerio Brenes</option>
-          <option value="Igor Zuñiga Calvo">Igor Zuñiga Calvo</option>
-          <option value="Victor Meza Portuguez">Victor Meza Portuguez</option>
-          <option value="Sherryl Campos Torres">Sherryl Campos Torres</option>
-          <option value="Karla Vetrani López">Karla Vetrani López</option>
-          <option value="María Gamboa Solano">María Gamboa Solano</option>
-          <option value="María Alvarez Zúñiga">María Alvarez Zúñiga</option>
-          <option value="Rafael Murillo Salas">Rafael Murillo Salas</option>
-          <option value="Roy Cruz Araya">Roy Cruz Araya</option>
-          <option value="José Rojas Madrigal">José Rojas Madrigal</option>
-          <option value="Marco Otarola Vindas">Marco Otarola Vindas</option>
-          <option value="María Avellan Sandí">María Avellan Sandí</option>
-          <option value="Pablo Ramirez Fonseca">Pablo Ramirez Fonseca</option>
-          <option value="Luis Diego Alfaro Mora">Luis Diego Alfaro Mora</option>
-          <option value="José Castro Vega">José Castro Vega</option>
-          <option value="Manfred Murrel Cascante">Manfred Murrel Cascante</option>
-          <option value="Damián Sanchez Rojas">Damián Sanchez Rojas</option>
-          <option value="Max Arguedas Pérez">Max Arguedas Pérez</option>
-          <option value="Gustavo Hernandez Quesada">Gustavo Hernandez Quesada</option>
-          <option value="Maria Bolaños Castro">Maria Bolaños Castro</option>
-          <option value="Jesus Ugalde Monge">Jesus Ugalde Monge</option>
-        </select>
-        <div class="loading-bar" id="loading-bar">
-          <div class="loading-fill" id="loading-fill"></div>
-        </div>
-        <div class="prof-tag" id="prof-tag">
-          <span>✓</span><span id="prof-tag-text"></span>
-        </div>
-      </div>
-      <div class="field-hint">La lista se actualiza cada ciclo desde la hoja de datos</div>
-    </div>
-    <div class="field-row" id="prof-info" style="display:none">
-      <div class="field">
-        <label class="field-label">Correo institucional</label>
-        <input class="fi" type="text" id="prof-correo" readonly/>
-        <div class="field-hint">Cargado automáticamente</div>
-      </div>
-      <div class="field">
-        <label class="field-label">Departamento</label>
-        <input class="fi" type="text" id="prof-dept" readonly/>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══ CURSOS AREA ═══ -->
-<div class="courses-placeholder" id="courses-placeholder">
-  <div class="placeholder-icon">👆</div>
-  <div>Seleccione un profesor para ver sus cursos asignados</div>
-</div>
-<div id="courses-container"></div>
-
-<!-- ═══ SUBMIT ═══ -->
-<div class="submit-wrap" id="submit-wrap" style="display:none">
-  <button class="submit-btn" id="submit-btn" onclick="enviarFormulario()">
-    ✉ Enviar notificación al profesor
+  <button class="submit-btn" style="max-width:200px;margin:0 auto" onclick="location.reload()">
+    🔄 Recargar página
   </button>
-  <div class="submit-note" id="submit-note"></div>
 </div>
 
-<!-- ═══ SUCCESS ═══ -->
-<div class="success-screen" id="success-screen">
-  <div class="success-icon">✅</div>
-  <div class="success-title">¡Notificación enviada correctamente!</div>
-  <div class="success-sub" id="success-sub"></div>
-  <button class="success-btn" onclick="resetForm()">📋 Registrar otro profesor</button>
-</div>
+<!-- ═══ MAIN CONTENT ═══ -->
+<div id="main-content" style="display:none">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-card">
+      <div class="header-stripe"></div>
+      <div class="header-body">
+        <div class="header-logo">
+          <div class="logo-dot"></div>
+          <span style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">EDECA — UNA</span>
+          <div class="logo-dot"></div>
+        </div>
+        <div class="header-title">Registro de Adecuaciones Estudiantiles</div>
+        <div class="header-sub">
+          Seleccione el profesor para cargar automáticamente sus cursos del ciclo activo.<br>
+          Complete los estudiantes con adecuación en cada curso y envíe el formulario.
+        </div>
+        <div>
+          <span class="sheets-badge">✓ Datos sincronizados con Google Sheets</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CICLO -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:#eff6ff">📅</div>
+      <div>
+        <div class="card-title">Ciclo lectivo</div>
+        <div class="card-sub">Período correspondiente a esta notificación</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field-row">
+        <div class="field">
+          <label class="field-label">Ciclo <span class="req">*</span></label>
+          <select class="fi" id="ciclo">
+            <option value="">— Seleccione —</option>
+            <option value="I Ciclo (Ene-Jun)">I Ciclo (Enero – Junio)</option>
+            <option value="II Ciclo (Jul-Nov)">II Ciclo (Julio – Noviembre)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label">Año <span class="req">*</span></label>
+          <select class="fi" id="anio">
+            <option value="">— Seleccione —</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+            <option value="2027">2027</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFESOR -->
+  <div class="card">
+    <div class="card-head">
+      <div class="card-icon" style="background:#f0fdf4">🧑‍🏫</div>
+      <div>
+        <div class="card-title">Seleccionar profesor</div>
+        <div class="card-sub">Lista cargada desde la hoja de cálculo — se actualiza automáticamente</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="field">
+        <label class="field-label">Nombre del profesor <span class="req">*</span></label>
+        <div class="prof-select-wrap">
+          <select class="fi" id="prof-select" onchange="onProfChange()">
+            <option value="">— Seleccione un profesor —</option>
+          </select>
+          <div class="loading-bar" id="loading-bar">
+            <div class="loading-fill" id="loading-fill"></div>
+          </div>
+          <div class="prof-tag" id="prof-tag">
+            <span>✓</span><span id="prof-tag-text"></span>
+          </div>
+        </div>
+        <div class="field-hint">
+          Para agregar o modificar profesores, actualice la hoja "📋 Profesores" en Google Sheets
+        </div>
+      </div>
+      <div class="field-row" id="prof-info" style="display:none">
+        <div class="field">
+          <label class="field-label">Correo institucional</label>
+          <input class="fi" type="text" id="prof-correo" readonly/>
+          <div class="field-hint">Cargado desde la hoja de datos</div>
+        </div>
+        <div class="field">
+          <label class="field-label">Departamento</label>
+          <input class="fi" type="text" id="prof-dept" readonly/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURSOS -->
+  <div class="courses-placeholder" id="courses-placeholder">
+    <div class="placeholder-icon">👆</div>
+    <div>Seleccione un profesor para ver sus cursos asignados este ciclo</div>
+  </div>
+  <div id="courses-container"></div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap" id="submit-wrap" style="display:none">
+    <button class="submit-btn" id="submit-btn" onclick="enviarFormulario()">
+      ✉ Enviar notificación al profesor
+    </button>
+    <div class="submit-note" id="submit-note"></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">✅</div>
+    <div class="success-title">¡Notificación enviada correctamente!</div>
+    <div class="success-sub" id="success-sub"></div>
+    <button class="success-btn" onclick="resetForm()">📋 Registrar otro profesor</button>
+  </div>
+
+</div><!-- fin main-content -->
 
 <script>
 // ══════════════════════════════════════════════════════
-// URL del Apps Script — NO MODIFICAR
+// CONFIGURACIÓN
 // ══════════════════════════════════════════════════════
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWNj_Hxg62OKnqvglzGgayIX5hwtdrFuIiWqIyMW2nCYjBw4anZTrirKq57y_XXvsJRw/exec";
 
-// ══════════════════════════════════════════════════════
-// BASE DE DATOS — Actualizar cada ciclo
-// ══════════════════════════════════════════════════════
-const DB = {
-  "Ronny Villalobos Quesada": {
-    correo: "rvillalobos@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-201",nombre:"Ecología General",        grupo:"G01",horario:"Lun-Mié 7:00–9:00 a.m.", aula:"711",jornada:"am"},
-      {codigo:"SCA-315",nombre:"Ecología de Poblaciones", grupo:"G02",horario:"Mar-Jue 10:00–12:00 m.", aula:"709",jornada:"am"},
-      {codigo:"SCA-410",nombre:"Ecología del Paisaje",    grupo:"G01",horario:"Vie 1:00–4:00 p.m.",     aula:"LAB-601",jornada:"pm"}
-    ]
-  },
-  "Sergio Molina Brenes": {
-    correo: "smolina@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-110",nombre:"Introducción C. Ambientales",grupo:"G01",horario:"Lun-Mié-Vie 8:00–9:00 a.m.",aula:"710",jornada:"am"},
-      {codigo:"SCA-220",nombre:"Manejo de Cuencas",          grupo:"G01",horario:"Mar-Jue 1:00–3:00 p.m.",    aula:"711",jornada:"pm"}
-    ]
-  },
-  "Federico Alice Pérez": {
-    correo: "falice@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-305",nombre:"Limnología",grupo:"G01",horario:"Mié 7:00–10:00 a.m.",aula:"LAB-602",jornada:"am"}
-    ]
-  },
-  "María Chaves Rodríguez": {
-    correo: "mchaves@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-208",nombre:"Edafología",              grupo:"G01",horario:"Lun-Mié 10:00 a.m.–12:00 m.",aula:"710",jornada:"am"},
-      {codigo:"SCA-325",nombre:"Contaminación de Suelos", grupo:"G02",horario:"Mar-Jue 6:00–8:00 p.m.",    aula:"708",jornada:"ev"}
-    ]
-  },
-  "Gustavo Vargas Solís": {
-    correo: "gvargas@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-401",nombre:"Gestión Ambiental",grupo:"G01",horario:"Lun-Mié 1:00–3:00 p.m.",aula:"LAB-603",jornada:"pm"}
-    ]
-  },
-  "Alina Aguilar Mora": {
-    correo: "aaguilar@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-115",nombre:"Química Ambiental",grupo:"G01",horario:"Mar-Jue 7:00–9:00 a.m.",aula:"709",jornada:"am"}
-    ]
-  },
-  "Albert Morera Jiménez": {
-    correo: "amorera@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-230",nombre:"Hidrología",grupo:"G01",horario:"Lun-Mié 3:00–5:00 p.m.",aula:"711",jornada:"pm"}
-    ]
-  },
-  "Ernesto Montero Castro": {
-    correo: "emontero@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-312",nombre:"Meteorología Ambiental",grupo:"G01",horario:"Vie 7:00–10:00 a.m.",aula:"710",jornada:"am"}
-    ]
-  },
-  "María Loria Hernández": {
-    correo: "mloria@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-105",nombre:"Biología General",grupo:"G01",horario:"Lun-Mié-Vie 9:00–10:00 a.m.",aula:"708",jornada:"am"}
-    ]
-  },
-  "Nancy Zamora Ulate": {
-    correo: "nzamora@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-420",nombre:"Derecho Ambiental",grupo:"G01",horario:"Mar-Jue 6:00–8:00 p.m.",aula:"711",jornada:"ev"}
-    ]
-  },
-  "Vanessa Valerio Brenes": {
-    correo: "vvalerio@una.cr", dept: "Ciencias Ambientales",
-    cursos: [
-      {codigo:"SCA-215",nombre:"Planif. Uso del Suelo",grupo:"G01",horario:"Lun-Mié 10:00–12:00 m.",aula:"709",jornada:"am"}
-    ]
-  },
-  "Igor Zuñiga Calvo":      {correo:"izuniga@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-318",nombre:"Toxicología Ambiental",    grupo:"G01",horario:"Mar-Jue 1:00–3:00 p.m.",   aula:"710",jornada:"pm"}]},
-  "Victor Meza Portuguez":  {correo:"vmeza@una.cr",    dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-222",nombre:"Recursos Naturales",        grupo:"G01",horario:"Lun-Mié 1:00–3:00 p.m.",   aula:"708",jornada:"pm"}]},
-  "Sherryl Campos Torres":  {correo:"scampos@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-310",nombre:"Legislación Ambiental",     grupo:"G01",horario:"Sáb 7:00–10:00 a.m.",      aula:"708",jornada:"am"}]},
-  "Karla Vetrani López":    {correo:"kvetrani@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-225",nombre:"Ecología Marina",           grupo:"G01",horario:"Mar-Jue 10:00–12:00 m.",   aula:"710",jornada:"am"}]},
-  "María Gamboa Solano":    {correo:"mgamboa@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-302",nombre:"Fauna Silvestre",           grupo:"G01",horario:"Sáb 7:00–10:00 a.m.",      aula:"708",jornada:"am"}]},
-  "María Alvarez Zúñiga":   {correo:"malvarez@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-211",nombre:"Sistemas de Información",   grupo:"G01",horario:"Mar-Jue 1:00–3:00 p.m.",   aula:"711",jornada:"pm"}]},
-  "Rafael Murillo Salas":   {correo:"rmurillo@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-403",nombre:"Restauración Ecológica",    grupo:"G01",horario:"Lun-Mié 1:00–3:00 p.m.",   aula:"LAB-603",jornada:"pm"}]},
-  "Roy Cruz Araya":         {correo:"rcruz@una.cr",    dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-210",nombre:"Edafología Aplicada",       grupo:"G01",horario:"Mar-Jue 10:00–12:00 m.",   aula:"LAB-601",jornada:"am"}]},
-  "José Rojas Madrigal":    {correo:"jrojas@una.cr",   dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-320",nombre:"Impacto Ambiental",         grupo:"G01",horario:"Mar-Jue 7:00–9:00 a.m.",   aula:"LAB-602",jornada:"am"}]},
-  "Marco Otarola Vindas":   {correo:"motarola@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-315",nombre:"Biogeografía",              grupo:"G01",horario:"Mar-Jue 7:00–9:00 a.m.",   aula:"LAB-603",jornada:"am"},{codigo:"SCA-412",nombre:"Conservación de Biodiversidad",grupo:"G01",horario:"Jue 1:00–4:00 p.m.",aula:"LAB-603",jornada:"pm"}]},
-  "María Avellan Sandí":    {correo:"mavellan@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-218",nombre:"Botánica Aplicada",         grupo:"G01",horario:"Mié 7:00–10:00 a.m.",      aula:"LAB-603",jornada:"am"}]},
-  "Pablo Ramirez Fonseca":  {correo:"pramirez@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-101",nombre:"Fundamentos Ambientales",   grupo:"G01",horario:"Lun-Mié 7:00–9:00 a.m.",   aula:"LAB-601",jornada:"am"}]},
-  "Luis Diego Alfaro Mora": {correo:"lalfaro@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-322",nombre:"Gestión del Agua",          grupo:"G01",horario:"Mar-Jue 7:00–9:00 a.m.",   aula:"LAB-601",jornada:"am"},{codigo:"SCA-405",nombre:"Cambio Climático",grupo:"G01",horario:"Lun 6:00–9:00 p.m.",aula:"LAB-601",jornada:"ev"}]},
-  "José Castro Vega":       {correo:"jcastro@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-204",nombre:"Microbiología Ambiental",   grupo:"G01",horario:"Lun-Mié 1:00–3:00 p.m.",   aula:"LAB-601",jornada:"pm"}]},
-  "Manfred Murrel Cascante":{correo:"mmurrel@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-316",nombre:"Ecotoxicología",            grupo:"G01",horario:"Lun-Mié 7:00–9:00 a.m.",   aula:"LAB-602",jornada:"am"}]},
-  "Damián Sanchez Rojas":   {correo:"dsanchez@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-423",nombre:"Política Ambiental",        grupo:"G01",horario:"Mar 6:00–9:00 p.m.",        aula:"LAB-601",jornada:"ev"}]},
-  "Max Arguedas Pérez":     {correo:"marguedas@una.cr",dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-330",nombre:"Energías Renovables",       grupo:"G01",horario:"Lun 6:00–9:00 p.m.",        aula:"LAB-601",jornada:"ev"}]},
-  "Gustavo Hernandez Quesada":{correo:"ghernandez@una.cr",dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-201",nombre:"Ecología General",       grupo:"G02",horario:"Lun-Mié 7:00–9:00 a.m.",   aula:"709",jornada:"am"}]},
-  "Maria Bolaños Castro":   {correo:"mbolanos@una.cr", dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-108",nombre:"Química General",           grupo:"G01",horario:"Lun 6:00–9:00 p.m.",        aula:"710",jornada:"ev"}]},
-  "Jesus Ugalde Monge":     {correo:"jugalde@una.cr",  dept:"Ciencias Ambientales",cursos:[{codigo:"SCA-217",nombre:"Manejo de Residuos",        grupo:"G01",horario:"Jue 1:00–4:00 p.m.",        aula:"709",jornada:"pm"}]}
-};
+const TIPOS = ["No significativa", "Significativa", "De acceso"];
+const JORNADA_LABEL = {am:"Mañana", pm:"Tarde", ev:"Noche"};
+const JORNADA_PILL  = {am:"pill-blue", pm:"pill-green", ev:"pill-purple"};
 
-const JORNADA_LABEL = {am:"Mañana",pm:"Tarde",ev:"Noche"};
-const JORNADA_PILL  = {am:"pill-blue",pm:"pill-green",ev:"pill-purple"};
-const TIPOS = ["No significativa","Significativa","De acceso"];
-
+let DB = {};
+let currentProf = null;
 let studentCounts = {};
-let currentProf   = null;
+
+// ══════════════════════════════════════════════════════
+// CARGA INICIAL DESDE GOOGLE SHEETS
+// ══════════════════════════════════════════════════════
+window.addEventListener("load", function() {
+  fetch(APPS_SCRIPT_URL + "?action=datos")
+    .then(function(res) { return res.json(); })
+    .then(function(datos) {
+      DB = datos;
+      poblarSelectProfesor();
+      document.getElementById("loading-screen").classList.add("hidden");
+      document.getElementById("main-content").style.display = "block";
+    })
+    .catch(function(err) {
+      document.getElementById("loading-screen").classList.add("hidden");
+      document.getElementById("error-screen").classList.add("show");
+    });
+});
+
+function poblarSelectProfesor() {
+  const select = document.getElementById("prof-select");
+  const nombres = Object.keys(DB).sort();
+  nombres.forEach(function(nombre) {
+    const opt = document.createElement("option");
+    opt.value = nombre;
+    opt.textContent = nombre;
+    select.appendChild(opt);
+  });
+}
 
 // ══════════════════════════════════════════════════════
 // SELECCIÓN DE PROFESOR
@@ -574,59 +491,53 @@ function onProfChange() {
   document.getElementById("prof-info").style.display = "none";
   document.getElementById("prof-tag").classList.remove("show");
   submitWrap.style.display = "none";
+  studentCounts = {};
+  currentProf = null;
 
   if (!val) {
     placeholder.style.display = "block";
-    currentProf = null;
     return;
   }
 
   placeholder.style.display = "none";
 
-  // Loading bar
   const bar  = document.getElementById("loading-bar");
   const fill = document.getElementById("loading-fill");
   bar.classList.add("show");
   fill.style.width = "0%";
-  setTimeout(() => fill.style.width = "75%", 30);
+  setTimeout(function() { fill.style.width = "75%"; }, 30);
 
-  setTimeout(() => {
+  setTimeout(function() {
     fill.style.width = "100%";
-    setTimeout(() => {
+    setTimeout(function() {
       bar.classList.remove("show");
       fill.style.width = "0%";
       cargarProfesor(val);
-    }, 220);
-  }, 480);
+    }, 200);
+  }, 400);
 }
 
 function cargarProfesor(nombre) {
   currentProf = DB[nombre];
   if (!currentProf) return;
 
-  // Info del profesor
   document.getElementById("prof-correo").value = currentProf.correo;
   document.getElementById("prof-dept").value   = currentProf.dept;
   document.getElementById("prof-info").style.display = "grid";
 
-  // Tag
-  const tag = document.getElementById("prof-tag");
   document.getElementById("prof-tag-text").textContent =
     currentProf.cursos.length + " curso(s) asignado(s) este ciclo";
-  tag.classList.add("show");
+  document.getElementById("prof-tag").classList.add("show");
 
-  // Renderizar cursos
   const container = document.getElementById("courses-container");
-  currentProf.cursos.forEach((curso, i) => {
+  currentProf.cursos.forEach(function(curso, i) {
     studentCounts[curso.codigo] = 1;
     const card = crearCursoCard(curso, i);
     container.appendChild(card);
-    setTimeout(() => card.classList.add("visible"), 60 * (i + 1));
+    setTimeout(function() { card.classList.add("visible"); }, 60 * (i + 1));
   });
 
-  // Submit
-  const submitWrap = document.getElementById("submit-wrap");
-  submitWrap.style.display = "block";
+  document.getElementById("submit-wrap").style.display = "block";
   document.getElementById("submit-note").textContent =
     "Se enviará un correo a " + currentProf.correo;
 }
@@ -637,9 +548,11 @@ function cargarProfesor(nombre) {
 function crearCursoCard(curso, idx) {
   const card = document.createElement("div");
   card.className = "course-card";
-  card.id = "card-" + curso.codigo.replace("-","");
+  const cid = curso.codigo.replace(/[^a-zA-Z0-9]/g, "");
 
-  const optsTipo = TIPOS.map(t => '<option>' + t + '</option>').join("");
+  const optsTipo = TIPOS.map(function(t) {
+    return '<option>' + t + '</option>';
+  }).join("");
 
   card.innerHTML =
     '<div class="course-head">'
@@ -649,13 +562,11 @@ function crearCursoCard(curso, idx) {
     + '<div class="course-code-txt">' + curso.codigo + ' · ' + curso.grupo + '</div>'
     + '</div>'
     + '<div class="course-pills">'
-    + '<span class="pill ' + JORNADA_PILL[curso.jornada] + '">' + JORNADA_LABEL[curso.jornada] + '</span>'
+    + '<span class="pill ' + (JORNADA_PILL[curso.jornada] || "pill-grey") + '">' + (JORNADA_LABEL[curso.jornada] || curso.jornada) + '</span>'
     + '<span class="pill pill-grey">' + curso.aula + '</span>'
     + '</div></div>'
     + '<div class="course-body">'
-
-    // Datos auto-cargados
-    + '<div class="auto-notice">↑ Datos cargados automáticamente desde la hoja de horarios</div>'
+    + '<div class="auto-notice">✓ Datos cargados automáticamente desde Google Sheets</div>'
     + '<div class="field-row-3" style="margin-bottom:1.2rem">'
     + '<div class="field"><label class="field-label">Código / Grupo</label>'
     + '<input class="fi" type="text" value="' + curso.codigo + ' / ' + curso.grupo + '" readonly/></div>'
@@ -664,99 +575,90 @@ function crearCursoCard(curso, idx) {
     + '<div class="field"><label class="field-label">Aula</label>'
     + '<input class="fi" type="text" value="' + curso.aula + '" readonly/></div>'
     + '</div>'
-
-    // Estudiantes
     + '<div class="sec-title sec-blue">🎓 Estudiantes con adecuación</div>'
-    + '<div id="students-' + curso.codigo.replace("-","") + '">'
-    + buildStudentRow(curso.codigo, 1, optsTipo)
+    + '<div id="students-' + cid + '">'
+    + buildStudentRow(cid, 1, optsTipo)
     + '</div>'
-    + '<button class="add-student-btn" onclick="addStudent(\'' + curso.codigo + '\')">'
+    + '<button class="add-student-btn" onclick="addStudent(\'' + cid + '\')">'
     + '＋ Agregar otro estudiante</button>'
-
-    // Observaciones
     + '<div class="sec-title sec-grey" style="margin-top:1.2rem">📝 Observaciones (opcional)</div>'
-    + '<textarea class="fi" id="obs-' + curso.codigo.replace("-","") + '" '
-    + 'placeholder="Indique cualquier detalle relevante para este curso..."></textarea>'
-
+    + '<textarea class="fi" id="obs-' + cid + '" placeholder="Indique cualquier detalle relevante..."></textarea>'
     + '</div>';
 
+  card._cursoData = curso;
   return card;
 }
 
-function buildStudentRow(codigo, num, optsTipo) {
-  if (!optsTipo) optsTipo = TIPOS.map(t => '<option>' + t + '</option>').join("");
-  const id = codigo.replace("-","");
-  return '<div class="student-row" id="sr-' + id + '-' + num + '">'
+function buildStudentRow(cid, num, optsTipo) {
+  if (!optsTipo) optsTipo = TIPOS.map(function(t){ return '<option>'+t+'</option>'; }).join("");
+  return '<div class="student-row" id="sr-' + cid + '-' + num + '">'
     + '<div><span class="s-label">Nombre completo</span>'
-    + '<input class="fi" type="text" placeholder="Apellidos, Nombre" '
-    + 'id="sn-' + id + '-' + num + '"/></div>'
+    + '<input class="fi" type="text" placeholder="Apellidos, Nombre" id="sn-' + cid + '-' + num + '"/></div>'
     + '<div><span class="s-label">Carné</span>'
-    + '<input class="fi" type="text" placeholder="20XX-XXXX" '
-    + 'id="sc-' + id + '-' + num + '"/></div>'
+    + '<input class="fi" type="text" placeholder="20XX-XXXX" id="sc-' + cid + '-' + num + '"/></div>'
     + '<div><span class="s-label">Tipo de adecuación</span>'
-    + '<select class="fi" id="st-' + id + '-' + num + '">' + optsTipo + '</select></div>'
-    + '<button class="remove-btn" onclick="removeStudent(\'' + codigo + '\',' + num + ')" title="Eliminar">✕</button>'
+    + '<select class="fi" id="st-' + cid + '-' + num + '">' + optsTipo + '</select></div>'
+    + '<button class="remove-btn" onclick="removeStudent(\'' + cid + '\',' + num + ')" title="Eliminar">✕</button>'
     + '</div>';
 }
 
-function addStudent(codigo) {
-  const id = codigo.replace("-","");
-  studentCounts[codigo]++;
-  const n = studentCounts[codigo];
-  const container = document.getElementById("students-" + id);
+function addStudent(cid) {
+  if (!studentCounts[cid]) studentCounts[cid] = 1;
+  studentCounts[cid]++;
+  const n = studentCounts[cid];
+  const container = document.getElementById("students-" + cid);
   const tmp = document.createElement("div");
-  tmp.innerHTML = buildStudentRow(codigo, n);
+  tmp.innerHTML = buildStudentRow(cid, n);
   const row = tmp.firstElementChild;
   row.style.opacity = "0";
   row.style.transform = "translateY(8px)";
   container.appendChild(row);
-  setTimeout(() => {
+  setTimeout(function() {
     row.style.transition = "opacity .25s,transform .25s";
     row.style.opacity = "1";
     row.style.transform = "translateY(0)";
   }, 20);
 }
 
-function removeStudent(codigo, num) {
-  const id = codigo.replace("-","");
-  const row = document.getElementById("sr-" + id + "-" + num);
+function removeStudent(cid, num) {
+  const row = document.getElementById("sr-" + cid + "-" + num);
   if (!row) return;
-  const container = document.getElementById("students-" + id);
+  const container = document.getElementById("students-" + cid);
   if (container.children.length <= 1) {
     showToast("Debe haber al menos un estudiante por curso", "err");
     return;
   }
   row.style.transition = "opacity .2s";
   row.style.opacity = "0";
-  setTimeout(() => row.remove(), 200);
+  setTimeout(function() { row.remove(); }, 200);
 }
 
 // ══════════════════════════════════════════════════════
 // ENVIAR FORMULARIO
 // ══════════════════════════════════════════════════════
 function enviarFormulario() {
-  const ciclo  = document.getElementById("ciclo").value;
-  const anio   = document.getElementById("anio").value;
+  const ciclo      = document.getElementById("ciclo").value;
+  const anio       = document.getElementById("anio").value;
   const profNombre = document.getElementById("prof-select").value;
 
   if (!ciclo || !anio) { showToast("Seleccione el ciclo y el año", "err"); return; }
   if (!profNombre)     { showToast("Seleccione un profesor", "err"); return; }
 
-  // Recopilar cursos y estudiantes
   const cursos = [];
   let hayEstudiantes = false;
 
-  currentProf.cursos.forEach(curso => {
-    const id = curso.codigo.replace("-","");
-    const container = document.getElementById("students-" + id);
+  currentProf.cursos.forEach(function(curso) {
+    const cid = curso.codigo.replace(/[^a-zA-Z0-9]/g, "");
+    const container = document.getElementById("students-" + cid);
     if (!container) return;
 
     const estudiantes = [];
-    Array.from(container.children).forEach(row => {
-      const rowId = row.id.replace("sr-" + id + "-","");
-      const nombre = document.getElementById("sn-" + id + "-" + rowId);
-      const carne  = document.getElementById("sc-" + id + "-" + rowId);
-      const tipo   = document.getElementById("st-" + id + "-" + rowId);
+    Array.from(container.children).forEach(function(row) {
+      const parts = row.id.split("-");
+      const num = parts[parts.length - 1];
+      const nombre = document.getElementById("sn-" + cid + "-" + num);
+      const carne  = document.getElementById("sc-" + cid + "-" + num);
+      const tipo   = document.getElementById("st-" + cid + "-" + num);
       if (nombre && nombre.value.trim()) {
         estudiantes.push({
           nombre: nombre.value.trim(),
@@ -784,57 +686,44 @@ function enviarFormulario() {
     return;
   }
 
-  // Deshabilitar botón
   const btn = document.getElementById("submit-btn");
   btn.disabled = true;
-  btn.textContent = "⏳ Enviando...";
+  btn.innerHTML = "⏳ Enviando...";
 
-  const payload = {
-    ciclo:    ciclo,
-    anio:     anio,
-    profesor: profNombre,
-    correo:   currentProf.correo,
-    cursos:   cursos
-  };
-
-  // Enviar a Apps Script
   fetch(APPS_SCRIPT_URL, {
     method: "POST",
     mode: "no-cors",
     headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      ciclo:    ciclo,
+      anio:     anio,
+      profesor: profNombre,
+      correo:   currentProf.correo,
+      cursos:   cursos
+    })
   })
-  .then(() => {
-    // no-cors no devuelve respuesta legible, asumimos éxito
+  .then(function() {
     mostrarExito(profNombre, currentProf.correo, cursos.length);
   })
-  .catch(err => {
+  .catch(function() {
     btn.disabled = false;
-    btn.textContent = "✉ Enviar notificación al profesor";
+    btn.innerHTML = "✉ Enviar notificación al profesor";
     showToast("Error al enviar. Intente de nuevo.", "err");
   });
 }
 
 function mostrarExito(profesor, correo, numCursos) {
-  // Ocultar todo
-  document.getElementById("section-ciclo").style.display    = "none";
-  document.getElementById("section-profesor").style.display = "none";
-  document.getElementById("courses-placeholder").style.display = "none";
-  document.getElementById("courses-container").style.display   = "none";
-  document.getElementById("submit-wrap").style.display         = "none";
+  document.querySelectorAll(".card, .courses-placeholder, .course-card, #courses-container, #submit-wrap")
+    .forEach(function(el) { el.style.display = "none"; });
 
-  // Mostrar éxito
-  const screen = document.getElementById("success-screen");
   document.getElementById("success-sub").innerHTML =
     'El correo fue enviado a <strong>' + correo + '</strong><br>'
     + 'con la información de <strong>' + numCursos + ' curso(s)</strong> y sus estudiantes con adecuación.<br><br>'
     + 'El registro quedó guardado automáticamente en la hoja de historial.';
-  screen.classList.add("show");
+  document.getElementById("success-screen").classList.add("show");
 }
 
-function resetForm() {
-  location.reload();
-}
+function resetForm() { location.reload(); }
 
 // ══════════════════════════════════════════════════════
 // UTILS
@@ -845,7 +734,7 @@ function showToast(msg, type) {
   t.textContent = msg;
   t.className = "toast " + type + " show";
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+  toastTimer = setTimeout(function() { t.classList.remove("show"); }, 3000);
 }
 </script>
 </body>
