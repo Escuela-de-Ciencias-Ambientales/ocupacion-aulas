@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head>window.addEventListener("load", function() {
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Registro de Adecuaciones — EDECA</title>
@@ -453,18 +453,21 @@ let studentCounts = {};
 // CARGA INICIAL DESDE GOOGLE SHEETS
 // ══════════════════════════════════════════════════════
 window.addEventListener("load", function() {
-  fetch(APPS_SCRIPT_URL + "?action=datos")
-    .then(function(res) { return res.json(); })
-    .then(function(datos) {
-      DB = datos;
-      poblarSelectProfesor();
-      document.getElementById("loading-screen").classList.add("hidden");
-      document.getElementById("main-content").style.display = "block";
-    })
-    .catch(function(err) {
-      document.getElementById("loading-screen").classList.add("hidden");
-      document.getElementById("error-screen").classList.add("show");
-    });
+  const cbName = "cb_" + Date.now();
+  window[cbName] = function(datos) {
+    delete window[cbName];
+    DB = datos;
+    poblarSelectProfesor();
+    document.getElementById("loading-screen").classList.add("hidden");
+    document.getElementById("main-content").style.display = "block";
+  };
+  const script = document.createElement("script");
+  script.onerror = function() {
+    document.getElementById("loading-screen").classList.add("hidden");
+    document.getElementById("error-screen").classList.add("show");
+  };
+  script.src = APPS_SCRIPT_URL + "?action=datos&callback=" + cbName;
+  document.head.appendChild(script);
 });
 
 function poblarSelectProfesor() {
