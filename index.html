@@ -8,24 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     /* ══════════════════════════════════════════
-       BASE & VARIABLES
+       BASE & VARIABLES — TEMA CLARO
     ══════════════════════════════════════════ */
     :root {
-      --bg:        #0f1117;
-      --surface:   #181c27;
-      --border:    #2a2f42;
-      --accent:    #4f8ef7;
-      --accent2:   #34d399;
-      --muted:     #64748b;
-      --text:      #e2e8f0;
-      --text-dim:  #94a3b8;
-      --morning:   #1e3a5f;
-      --afternoon: #1a3328;
-      --night:     #2d1b4e;
-      --occupied-morning:  #2563eb;
-      --occupied-afternoon:#059669;
-      --occupied-night:    #7c3aed;
-      --cell-h:    42px;
+      --bg:            #f1f5f9;
+      --surface:       #ffffff;
+      --border:        #e2e8f0;
+      --border-strong: #cbd5e1;
+      --accent:        #1d4ed8;
+      --accent2:       #059669;
+      --muted:         #94a3b8;
+      --text:          #0f172a;
+      --text-dim:      #64748b;
+      --cell-h:        42px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,370 +36,232 @@
     /* ══════════════════════════════════════════
        HEADER
     ══════════════════════════════════════════ */
-    header {
-      text-align: center;
-      margin-bottom: 2.5rem;
-    }
+    header { text-align: center; margin-bottom: 2.5rem; }
     .logo-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: .75rem;
-      margin-bottom: .5rem;
+      display: flex; align-items: center; justify-content: center;
+      gap: .75rem; margin-bottom: .5rem;
     }
     .logo-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
+      width: 10px; height: 10px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 12px var(--accent);
+      box-shadow: 0 0 10px rgba(29,78,216,.3);
     }
     h1 {
       font-size: clamp(1.4rem, 4vw, 2.2rem);
-      font-weight: 600;
-      letter-spacing: -.02em;
-      color: var(--text);
+      font-weight: 600; letter-spacing: -.02em; color: var(--text);
     }
-    .subtitle {
-      font-size: .9rem;
-      color: var(--text-dim);
-      margin-top: .3rem;
-    }
+    .subtitle { font-size: .9rem; color: var(--text-dim); margin-top: .3rem; }
     .updated {
-      display: inline-block;
-      margin-top: .8rem;
-      font-family: 'DM Mono', monospace;
-      font-size: .75rem;
-      color: var(--muted);
-      background: var(--surface);
-      border: 1px solid var(--border);
-      padding: .25rem .75rem;
-      border-radius: 999px;
+      display: inline-block; margin-top: .8rem;
+      font-family: 'DM Mono', monospace; font-size: .75rem;
+      color: var(--muted); background: var(--surface);
+      border: 1px solid var(--border-strong);
+      padding: .25rem .75rem; border-radius: 999px;
     }
 
     /* ══════════════════════════════════════════
        LEGEND
     ══════════════════════════════════════════ */
     .legend {
-      display: flex;
-      gap: 1.5rem;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
+      display: flex; gap: 1.5rem; justify-content: center;
+      margin-bottom: 1.5rem; flex-wrap: wrap;
     }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: .5rem;
-      font-size: .8rem;
-      color: var(--text-dim);
-    }
-    .legend-box {
-      width: 16px; height: 16px;
-      border-radius: 4px;
-    }
-    .lb-free   { background: var(--surface); border: 1px solid var(--border); }
-    .lb-am     { background: var(--occupied-morning); }
-    .lb-pm     { background: var(--occupied-afternoon); }
-    .lb-ev     { background: var(--occupied-night); }
+    .legend-item { display: flex; align-items: center; gap: .5rem; font-size: .8rem; color: var(--text-dim); }
+    .legend-box  { width: 16px; height: 16px; border-radius: 4px; }
+    .lb-free { background: #f8fafc; border: 1px solid var(--border-strong); }
+    .lb-am   { background: #2563eb; }
+    .lb-pm   { background: #059669; }
+    .lb-ev   { background: #7c3aed; }
 
     /* ══════════════════════════════════════════
        TABLE WRAPPER
     ══════════════════════════════════════════ */
     .table-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      overflow-x: auto;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 40px rgba(0,0,0,.45);
+      max-width: 1100px; margin: 0 auto; overflow-x: auto;
+      border-radius: 16px; border: 1px solid var(--border-strong);
+      box-shadow: 0 4px 24px rgba(15,23,42,.08);
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 680px;
-    }
+    table { width: 100%; border-collapse: collapse; min-width: 680px; background: var(--surface); }
 
     /* ══════════════════════════════════════════
        HEADER ROW
     ══════════════════════════════════════════ */
-    thead tr {
-      background: var(--surface);
-    }
+    thead tr { background: #f8fafc; }
     th {
-      padding: .75rem 1rem;
-      font-size: .75rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
+      padding: .75rem 1rem; font-size: .72rem; font-weight: 700;
+      letter-spacing: .08em; text-transform: uppercase;
+      color: var(--text-dim); border-bottom: 2px solid var(--border-strong); white-space: nowrap;
     }
-    th:first-child  { border-radius: 16px 0 0 0; }
-    th:last-child   { border-radius: 0 16px 0 0; }
-    th.col-room     { text-align: left; padding-left: 1.5rem; min-width: 90px; }
-    th.col-jornada  { min-width: 80px; }
-    th.col-day      { min-width: 130px; }
+    th:first-child { border-radius: 16px 0 0 0; }
+    th:last-child  { border-radius: 0 16px 0 0; }
+    th.col-room    { text-align: left; padding-left: 1.5rem; min-width: 90px; }
+    th.col-jornada { min-width: 80px; }
+    th.col-day     { min-width: 130px; }
 
     /* ══════════════════════════════════════════
        BODY ROWS
     ══════════════════════════════════════════ */
     tbody tr { border-bottom: 1px solid var(--border); }
     tbody tr:last-child { border-bottom: none; }
+    td { height: var(--cell-h); vertical-align: middle; font-size: .82rem; }
 
-    td {
-      height: var(--cell-h);
-      vertical-align: middle;
-      font-size: .82rem;
-    }
-
-    /* Room label cell */
+    /* Room label */
     td.td-room {
-      padding-left: 1.5rem;
-      font-family: 'DM Mono', monospace;
-      font-size: .85rem;
-      font-weight: 500;
-      color: var(--accent);
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      white-space: nowrap;
-      vertical-align: middle;
+      padding-left: 0; text-align: center; font-family: 'DM Mono', monospace;
+      font-size: .85rem; font-weight: 600; color: var(--accent);
+      background: #f8fafc; border-right: 1px solid var(--border-strong);
+      border-bottom: none; white-space: nowrap; vertical-align: middle;
     }
+    .row-pm td.td-room, .row-ev td.td-room { border-top: none; border-bottom: none; }
 
-    /* Jornada cell */
+    /* Jornada */
     td.td-jornada {
-      padding: 0 .75rem;
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      border-right: 1px solid var(--border);
-      white-space: nowrap;
+      padding: 0 .75rem; font-size: .68rem; font-weight: 700;
+      letter-spacing: .07em; text-transform: uppercase;
+      border-right: 1px solid var(--border); white-space: nowrap;
     }
-    .row-am td.td-jornada { color: #60a5fa; background: rgba(37,99,235,.07); }
-    .row-pm td.td-jornada { color: #34d399; background: rgba(5,150,105,.07); }
-    .row-ev td.td-jornada { color: #c4b5fd; background: rgba(124,58,237,.07); }
+    .row-am td.td-jornada { color: #1d4ed8; background: rgba(37,99,235,.05); }
+    .row-pm td.td-jornada { color: #059669; background: rgba(5,150,105,.05); }
+    .row-ev td.td-jornada { color: #7c3aed; background: rgba(124,58,237,.05); }
 
-    /* Separator between rooms */
-    tr.room-sep td { border-top: 2px solid var(--border); }
+    /* Quitar borde interno entre filas del mismo aula */
+    .row-pm td, .row-ev td { border-top: none; }
+    /* Solo separar entre aulas distintas */
+    tr.room-sep td { border-top: 2px solid var(--border-strong); }
 
-    /* Data cells */
+    /* Day cells */
     td.td-day {
-      padding: 0 .75rem;
-      border-right: 1px solid var(--border);
-      text-align: center;
-      transition: background .15s;
-      cursor: default;
+      padding: 0 .75rem; border-right: 1px solid var(--border);
+      text-align: center; transition: background .15s; cursor: default;
     }
     td.td-day:last-child { border-right: none; }
 
-    /* Occupied states */
-    td.td-day.occupied-am {
-      background: rgba(37,99,235,.18);
-      color: #93c5fd;
-      font-weight: 500;
-    }
-    td.td-day.occupied-pm {
-      background: rgba(5,150,105,.18);
-      color: #6ee7b7;
-      font-weight: 500;
-    }
-    td.td-day.occupied-ev {
-      background: rgba(124,58,237,.18);
-      color: #c4b5fd;
-      font-weight: 500;
-    }
+    /* Occupied — light tinted */
+    td.td-day.occupied-am { background: #eff6ff; color: #1e40af; font-weight: 500; }
+    td.td-day.occupied-pm { background: #f0fdf4; color: #166534; font-weight: 500; }
+    td.td-day.occupied-ev { background: #faf5ff; color: #6b21a8; font-weight: 500; }
 
-    /* Empty cells */
+    /* Empty */
     td.td-day:not(.occupied-am):not(.occupied-pm):not(.occupied-ev) {
-      background: transparent;
-      color: var(--muted);
+      background: transparent; color: #cbd5e1;
     }
 
     .cell-content {
-      font-size: .78rem;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 120px;
+      font-size: .78rem; line-height: 1.2; white-space: nowrap;
+      overflow: hidden; text-overflow: ellipsis; max-width: 120px; margin: 0 auto;
     }
-    .cell-empty { color: var(--border); font-size: .65rem; }
+    .cell-empty { font-size: .65rem; }
 
     /* ══════════════════════════════════════════
-       ADMIN BUTTON (small, discreet)
+       ADMIN BUTTON
     ══════════════════════════════════════════ */
     .admin-trigger {
-      position: fixed;
-      bottom: 1.5rem;
-      right: 1.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      border-radius: 8px;
-      padding: .45rem .8rem;
-      font-size: .7rem;
-      font-family: 'DM Mono', monospace;
-      cursor: pointer;
-      transition: all .2s;
-      z-index: 100;
+      position: fixed; bottom: 1.5rem; right: 1.5rem;
+      background: var(--surface); border: 1px solid var(--border-strong);
+      color: var(--muted); border-radius: 8px; padding: .45rem .8rem;
+      font-size: .7rem; font-family: 'DM Mono', monospace;
+      cursor: pointer; transition: all .2s; z-index: 100;
+      box-shadow: 0 2px 8px rgba(15,23,42,.1);
     }
     .admin-trigger:hover { border-color: var(--accent); color: var(--accent); }
 
     /* ══════════════════════════════════════════
-       MODAL OVERLAY
+       MODAL
     ══════════════════════════════════════════ */
     .modal-bg {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.7);
-      backdrop-filter: blur(6px);
-      z-index: 200;
-      align-items: center;
-      justify-content: center;
+      display: none; position: fixed; inset: 0;
+      background: rgba(15,23,42,.35); backdrop-filter: blur(4px);
+      z-index: 200; align-items: center; justify-content: center;
     }
     .modal-bg.open { display: flex; }
-
     .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      width: min(480px, 92vw);
-      box-shadow: 0 20px 60px rgba(0,0,0,.6);
+      background: var(--surface); border: 1px solid var(--border-strong);
+      border-radius: 16px; padding: 2rem; width: min(480px, 92vw);
+      box-shadow: 0 20px 60px rgba(15,23,42,.15);
     }
-    .modal h2 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 1.25rem;
-      color: var(--text);
-    }
-    .modal label {
-      display: block;
-      font-size: .78rem;
-      color: var(--text-dim);
-      margin-bottom: .4rem;
-    }
+    .modal h2 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text); }
+    .modal label { display: block; font-size: .78rem; color: var(--text-dim); margin-bottom: .4rem; }
     .modal input, .modal select {
-      width: 100%;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      padding: .6rem .9rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: .9rem;
-      margin-bottom: 1rem;
-      outline: none;
-      transition: border-color .2s;
+      width: 100%; background: var(--bg); border: 1px solid var(--border-strong);
+      border-radius: 8px; color: var(--text); padding: .6rem .9rem;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      margin-bottom: 1rem; outline: none; transition: border-color .2s;
     }
     .modal input:focus, .modal select:focus { border-color: var(--accent); }
-    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: .6rem 1.2rem;
-      border-radius: 8px;
-      font-size: .85rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: none;
-      transition: all .2s;
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: .6rem 1.2rem; border-radius: 8px; font-size: .85rem;
+      font-weight: 600; cursor: pointer; border: none; transition: all .2s;
     }
     .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover { filter: brightness(1.15); }
-    .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-dim); }
-    .btn-ghost:hover { border-color: var(--text-dim); color: var(--text); }
+    .btn-primary:hover { background: #1e40af; }
+    .btn-ghost { background: transparent; border: 1px solid var(--border-strong); color: var(--text-dim); }
+    .btn-ghost:hover { border-color: #94a3b8; color: var(--text); }
     .btn-danger { background: #dc2626; color: #fff; }
-    .btn-danger:hover { filter: brightness(1.15); }
-    .btn-row {
-      display: flex;
-      gap: .75rem;
-      justify-content: flex-end;
-      margin-top: .5rem;
-    }
+    .btn-danger:hover { background: #b91c1c; }
+    .btn-row { display: flex; gap: .75rem; justify-content: flex-end; margin-top: .5rem; }
 
     /* ══════════════════════════════════════════
        EXPORT BOX
     ══════════════════════════════════════════ */
     .export-box {
-      display: none;
-      max-width: 1100px;
-      margin: 2rem auto 0;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 1.5rem;
+      display: none; max-width: 1100px; margin: 2rem auto 0;
+      background: var(--surface); border: 1px solid var(--border-strong);
+      border-radius: 12px; padding: 1.5rem;
     }
     .export-box.open { display: block; }
     .export-box h3 { font-size: .9rem; color: var(--accent); margin-bottom: .75rem; }
     .export-box p { font-size: .8rem; color: var(--text-dim); margin-bottom: .75rem; line-height: 1.6; }
     .export-box pre {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: 'DM Mono', monospace;
-      font-size: .72rem;
-      color: #94a3b8;
-      overflow-x: auto;
-      max-height: 280px;
-      white-space: pre-wrap;
-      word-break: break-all;
+      background: var(--bg); border: 1px solid var(--border-strong); border-radius: 8px;
+      padding: 1rem; font-family: 'DM Mono', monospace; font-size: .72rem; color: #475569;
+      overflow-x: auto; max-height: 280px; white-space: pre-wrap; word-break: break-all;
     }
-    .copy-btn {
-      margin-top: .75rem;
-      font-size: .78rem;
-    }
+    .copy-btn { margin-top: .75rem; font-size: .78rem; }
 
     /* ══════════════════════════════════════════
        TOAST
     ══════════════════════════════════════════ */
     .toast {
-      position: fixed;
-      bottom: 5rem;
-      right: 1.5rem;
-      background: #1e293b;
-      border: 1px solid var(--accent2);
-      color: var(--accent2);
-      border-radius: 8px;
-      padding: .6rem 1rem;
-      font-size: .82rem;
-      opacity: 0;
-      transition: opacity .3s;
-      z-index: 300;
-      pointer-events: none;
+      position: fixed; bottom: 5rem; right: 1.5rem;
+      background: #fff; border: 1px solid var(--accent2); color: var(--accent2);
+      border-radius: 8px; padding: .6rem 1rem; font-size: .82rem;
+      opacity: 0; transition: opacity .3s; z-index: 300; pointer-events: none;
+      box-shadow: 0 4px 16px rgba(15,23,42,.1);
     }
     .toast.show { opacity: 1; }
 
     /* ══════════════════════════════════════════
-       RESPONSIVE
+       ADMIN TOOLBAR
     ══════════════════════════════════════════ */
+    #admin-toolbar {
+      display: none; position: fixed; top: 0; left: 0; right: 0;
+      background: #fff; border-bottom: 2px solid var(--accent);
+      padding: .6rem 1.5rem; align-items: center; gap: 1rem;
+      z-index: 150; flex-wrap: wrap;
+      box-shadow: 0 2px 12px rgba(15,23,42,.08);
+    }
+
     @media (max-width: 600px) {
       body { padding: 1rem .5rem 4rem; }
       td.td-room { padding-left: .75rem; font-size: .75rem; }
-      td.td-day { padding: 0 .4rem; }
+      td.td-day  { padding: 0 .4rem; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
 <header>
   <div class="logo-row">
     <div class="logo-dot"></div>
     <h1>Ocupación de Aulas</h1>
     <div class="logo-dot"></div>
   </div>
-  <p class="subtitle">Universidad Nacional — Campus [NOMBRE]</p>
+  <p class="subtitle">Escuela de Ciencias Ambientales — EDECA</p>
   <span class="updated" id="updated-label">Actualizado: —</span>
 </header>
 
-<!-- ═══════════════════════════ LEGEND ════════════════════════════ -->
 <div class="legend">
   <div class="legend-item"><div class="legend-box lb-free"></div> Disponible</div>
   <div class="legend-item"><div class="legend-box lb-am"></div> Ocupada (Mañana)</div>
@@ -412,7 +269,6 @@
   <div class="legend-item"><div class="legend-box lb-ev"></div> Ocupada (Noche)</div>
 </div>
 
-<!-- ═══════════════════════════ TABLE ════════════════════════════ -->
 <div class="table-wrap">
   <table id="schedule-table">
     <thead>
@@ -431,25 +287,21 @@
   </table>
 </div>
 
-<!-- ═══════════════════════════ EXPORT BOX ════════════════════════ -->
 <div class="export-box" id="export-box">
   <h3>🔧 Instrucciones para guardar cambios permanentes</h3>
   <p>
-    Los cambios que hiciste están guardados en <em>este navegador</em>.
-    Para que <strong>todos los visitantes</strong> vean los cambios, copia el bloque de datos de abajo
+    Los cambios están guardados en <em>este navegador</em>.
+    Para que <strong>todos los visitantes</strong> vean los cambios, copia el bloque de abajo
     y pégalo en el archivo <code>index.html</code> en GitHub, reemplazando la variable <code>SCHEDULE_DATA</code>.
   </p>
   <pre id="export-pre"></pre>
   <button class="btn btn-ghost copy-btn" onclick="copyExport()">📋 Copiar datos</button>
 </div>
 
-<!-- ═══════════════════════════ ADMIN BUTTON ══════════════════════ -->
 <button class="admin-trigger" onclick="showLogin()">⚙ Admin</button>
-
-<!-- ═══════════════════════════ TOAST ════════════════════════════ -->
 <div class="toast" id="toast"></div>
 
-<!-- ═══════════════════════════ LOGIN MODAL ═══════════════════════ -->
+<!-- LOGIN MODAL -->
 <div class="modal-bg" id="login-modal">
   <div class="modal">
     <h2>🔒 Acceso de administrador</h2>
@@ -462,18 +314,15 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════ EDIT MODAL ════════════════════════ -->
+<!-- EDIT MODAL -->
 <div class="modal-bg" id="edit-modal">
   <div class="modal">
     <h2 id="edit-modal-title">Editar celda</h2>
-
     <label>Contenido de la celda</label>
-    <input type="text" id="edit-text" placeholder="Ej: Cálculo I — Prof. Ramírez" maxlength="60" />
-
+    <input type="text" id="edit-text" placeholder="Ej: Prof. Ramírez" maxlength="60" />
     <p style="font-size:.75rem;color:var(--muted);margin-top:-.5rem;margin-bottom:1rem;">
-      Deja vacío para marcar como libre.
+      Deja vacío para marcar como disponible.
     </p>
-
     <div class="btn-row">
       <button class="btn btn-danger" onclick="clearCell()">Limpiar</button>
       <button class="btn btn-ghost" onclick="closeModal('edit-modal')">Cancelar</button>
@@ -482,7 +331,7 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════ ADD ROW MODAL ═════════════════════ -->
+<!-- MANAGE ROOMS MODAL -->
 <div class="modal-bg" id="addrow-modal">
   <div class="modal">
     <h2>➕ Gestionar aulas</h2>
@@ -492,7 +341,7 @@
       <button class="btn btn-ghost" onclick="closeModal('addrow-modal')">Cancelar</button>
       <button class="btn btn-primary" onclick="addRoom()">Agregar aula</button>
     </div>
-    <hr style="border-color:var(--border);margin:1rem 0;" />
+    <hr style="border-color:var(--border-strong);margin:1rem 0;" />
     <p style="font-size:.78rem;color:var(--text-dim);margin-bottom:.75rem;">Eliminar aula existente:</p>
     <select id="delete-room-select"></select>
     <div class="btn-row" style="margin-top:.25rem">
@@ -501,21 +350,9 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════ ADMIN TOOLBAR ═════════════════════ -->
-<div id="admin-toolbar" style="
-  display:none;
-  position:fixed;
-  top:0;left:0;right:0;
-  background:rgba(15,17,23,.95);
-  border-bottom:1px solid var(--accent);
-  padding:.6rem 1.5rem;
-  display:none;
-  align-items:center;
-  gap:1rem;
-  z-index:150;
-  flex-wrap:wrap;
-">
-  <span style="font-size:.75rem;font-family:'DM Mono',monospace;color:var(--accent);">MODO ADMIN</span>
+<!-- ADMIN TOOLBAR -->
+<div id="admin-toolbar">
+  <span style="font-size:.75rem;font-family:'DM Mono',monospace;color:var(--accent);font-weight:700;">MODO ADMIN</span>
   <button class="btn btn-ghost" style="font-size:.75rem;" onclick="showAddRow()">➕ Aulas</button>
   <button class="btn btn-ghost" style="font-size:.75rem;" onclick="toggleExport()">📋 Ver instrucciones</button>
   <button class="btn btn-ghost" style="font-size:.75rem;" onclick="exitAdmin()">✕ Salir</button>
@@ -525,9 +362,8 @@
 <script>
 /* ══════════════════════════════════════════════════════════════════
    DATOS DEL HORARIO — EDITAR ESTA SECCIÓN EN GITHUB
-   ══════════════════════════════════════════════════════════════════
-   Estructura: { "AULA": { "am": { "Lunes":"texto", ... }, "pm": {...} } }
-   "texto" vacío o "" = aula libre
+   Estructura: "AULA": { "am"/"pm"/"ev": { "Día":"texto", ... } }
+   Texto vacío "" = disponible
    ══════════════════════════════════════════════════════════════════ */
 const SCHEDULE_DATA = {
   "708": {
@@ -568,26 +404,19 @@ const SCHEDULE_DATA = {
 };
 
 /* ══════════════════════════════════════════════════════════════════
-   CONFIGURACIÓN — CAMBIAR CONTRASEÑA AQUÍ
+   CONFIGURACIÓN
    ══════════════════════════════════════════════════════════════════ */
-const ADMIN_PASSWORD = "admin2024";   // ← Cambia esto
-const CAMPUS_NAME    = "EDECA"; // ← Nombre del campus
+const ADMIN_PASSWORD = "admin2024"; // ← Cambia esto
 
-/* ══════════════════════════════════════════════════════════════════
-   ESTADO GLOBAL
-   ══════════════════════════════════════════════════════════════════ */
 const DAYS = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado"];
-
-let data      = JSON.parse(localStorage.getItem("schedule")) || deepClone(SCHEDULE_DATA);
+let data      = JSON.parse(localStorage.getItem("schedule"))  || deepClone(SCHEDULE_DATA);
 let roomOrder = JSON.parse(localStorage.getItem("roomOrder")) || Object.keys(SCHEDULE_DATA);
 let isAdmin   = false;
-let editTarget = null; // { room, period, day }
+let editTarget = null;
 
-function deepClone(obj) { return JSON.parse(JSON.stringify(obj)); }
+function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
 
-/* ══════════════════════════════════════════════════════════════════
-   RENDER
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ RENDER ══════════════════ */
 function render() {
   const tbody = document.getElementById("table-body");
   tbody.innerHTML = "";
@@ -599,14 +428,11 @@ function render() {
       tr.classList.add(period === "am" ? "row-am" : period === "pm" ? "row-pm" : "row-ev");
       if (period === "am" && idx > 0) tr.classList.add("room-sep");
 
-      // Room label — show only on am row
       const tdRoom = document.createElement("td");
       tdRoom.className = "td-room";
       tdRoom.textContent = period === "am" ? room : "";
-      if (period !== "am") tdRoom.style.borderTop = "none";
       tr.appendChild(tdRoom);
 
-      // Jornada
       const tdJ = document.createElement("td");
       tdJ.className = "td-jornada";
       tdJ.textContent = period === "am" ? "MAÑANA" : period === "pm" ? "TARDE" : "NOCHE";
@@ -614,7 +440,6 @@ function render() {
 
       const periodLabel = period === "am" ? "Mañana" : period === "pm" ? "Tarde" : "Noche";
 
-      // Day cells
       DAYS.forEach(day => {
         const val = (data[room][period] || {})[day] || "";
         const td  = document.createElement("td");
@@ -637,26 +462,20 @@ function render() {
     });
   });
 
-  // Updated label
   const ts = localStorage.getItem("scheduleUpdated");
   document.getElementById("updated-label").textContent =
     ts ? `Actualizado: ${ts}` : "Actualizado: —";
-
   updateExport();
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   AUTH
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ AUTH ══════════════════ */
 function showLogin() {
   document.getElementById("pwd-input").value = "";
   openModal("login-modal");
   setTimeout(() => document.getElementById("pwd-input").focus(), 100);
 }
-
 function checkLogin() {
-  const pwd = document.getElementById("pwd-input").value;
-  if (pwd === ADMIN_PASSWORD) {
+  if (document.getElementById("pwd-input").value === ADMIN_PASSWORD) {
     isAdmin = true;
     closeModal("login-modal");
     document.getElementById("admin-toolbar").style.display = "flex";
@@ -668,7 +487,6 @@ function checkLogin() {
     document.getElementById("pwd-input").value = "";
   }
 }
-
 function exitAdmin() {
   isAdmin = false;
   document.getElementById("admin-toolbar").style.display = "none";
@@ -677,131 +495,86 @@ function exitAdmin() {
   render();
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   EDIT CELL
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ EDIT CELL ══════════════════ */
 function openEdit(room, period, day) {
   editTarget = { room, period, day };
   const val = (data[room][period] || {})[day] || "";
-  const periodLabel = period === "am" ? "Mañana" : period === "pm" ? "Tarde" : "Noche";
-  document.getElementById("edit-modal-title").textContent =
-    `✏ ${room} · ${periodLabel} · ${day}`;
+  const lbl = period === "am" ? "Mañana" : period === "pm" ? "Tarde" : "Noche";
+  document.getElementById("edit-modal-title").textContent = `✏ ${room} · ${lbl} · ${day}`;
   document.getElementById("edit-text").value = val;
   openModal("edit-modal");
   setTimeout(() => document.getElementById("edit-text").focus(), 100);
 }
-
 function saveCell() {
   if (!editTarget) return;
   const { room, period, day } = editTarget;
-  const val = document.getElementById("edit-text").value.trim();
   if (!data[room][period]) data[room][period] = {};
-  data[room][period][day] = val;
-  persist();
-  closeModal("edit-modal");
-  render();
-  showToast("✓ Celda actualizada");
+  data[room][period][day] = document.getElementById("edit-text").value.trim();
+  persist(); closeModal("edit-modal"); render(); showToast("✓ Celda actualizada");
 }
-
 function clearCell() {
-  if (!editTarget) return;
-  document.getElementById("edit-text").value = "";
-  saveCell();
+  document.getElementById("edit-text").value = ""; saveCell();
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   ADD / DELETE ROOMS
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ ROOMS ══════════════════ */
 function showAddRow() {
-  // Populate delete select
   const sel = document.getElementById("delete-room-select");
   sel.innerHTML = "";
-  roomOrder.forEach(r => {
-    const opt = document.createElement("option");
-    opt.value = r; opt.textContent = r;
-    sel.appendChild(opt);
-  });
+  roomOrder.forEach(r => { const o = document.createElement("option"); o.value = r; o.textContent = r; sel.appendChild(o); });
   openModal("addrow-modal");
 }
-
 function addRoom() {
   const name = document.getElementById("newroom-input").value.trim().toUpperCase();
   if (!name) return showToast("Escribe el nombre del aula", true);
   if (data[name]) return showToast("El aula ya existe", true);
-  const emptyDays = {};
-  DAYS.forEach(d => emptyDays[d] = "");
-  data[name] = { am: { ...emptyDays }, pm: { ...emptyDays }, ev: { ...emptyDays } };
+  const e = {}; DAYS.forEach(d => e[d] = "");
+  data[name] = { am: {...e}, pm: {...e}, ev: {...e} };
   roomOrder.push(name);
-  persist();
-  closeModal("addrow-modal");
-  render();
-  showToast(`✓ Aula ${name} agregada`);
+  persist(); closeModal("addrow-modal"); render(); showToast(`✓ Aula ${name} agregada`);
 }
-
 function deleteRoom() {
-  const sel = document.getElementById("delete-room-select");
-  const name = sel.value;
-  if (!name) return;
-  if (!confirm(`¿Eliminar el aula ${name}?`)) return;
+  const name = document.getElementById("delete-room-select").value;
+  if (!name || !confirm(`¿Eliminar el aula ${name}?`)) return;
   delete data[name];
   roomOrder = roomOrder.filter(r => r !== name);
-  persist();
-  closeModal("addrow-modal");
-  render();
-  showToast(`✓ Aula ${name} eliminada`);
+  persist(); closeModal("addrow-modal"); render(); showToast(`✓ Aula ${name} eliminada`);
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   PERSIST & EXPORT
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ PERSIST & EXPORT ══════════════════ */
 function persist() {
   const now = new Date().toLocaleString("es-CR", { dateStyle:"short", timeStyle:"short" });
-  localStorage.setItem("schedule",         JSON.stringify(data));
-  localStorage.setItem("roomOrder",        JSON.stringify(roomOrder));
-  localStorage.setItem("scheduleUpdated",  now);
+  localStorage.setItem("schedule",        JSON.stringify(data));
+  localStorage.setItem("roomOrder",       JSON.stringify(roomOrder));
+  localStorage.setItem("scheduleUpdated", now);
 }
-
 function updateExport() {
-  const ordered = {};
-  roomOrder.forEach(r => { if (data[r]) ordered[r] = data[r]; });
-  document.getElementById("export-pre").textContent =
-    "const SCHEDULE_DATA = " + JSON.stringify(ordered, null, 2) + ";";
+  const o = {}; roomOrder.forEach(r => { if (data[r]) o[r] = data[r]; });
+  document.getElementById("export-pre").textContent = "const SCHEDULE_DATA = " + JSON.stringify(o, null, 2) + ";";
 }
-
-function toggleExport() {
-  document.getElementById("export-box").classList.toggle("open");
-  updateExport();
-}
-
+function toggleExport() { document.getElementById("export-box").classList.toggle("open"); updateExport(); }
 function copyExport() {
-  const text = document.getElementById("export-pre").textContent;
-  navigator.clipboard.writeText(text).then(() => showToast("✓ Datos copiados")).catch(() => {
-    showToast("Selecciona y copia manualmente", true);
-  });
+  navigator.clipboard.writeText(document.getElementById("export-pre").textContent)
+    .then(() => showToast("✓ Datos copiados"))
+    .catch(() => showToast("Selecciona y copia manualmente", true));
 }
 
-/* ══════════════════════════════════════════════════════════════════
-   UTILS
-   ══════════════════════════════════════════════════════════════════ */
+/* ══════════════════ UTILS ══════════════════ */
 function openModal(id)  { document.getElementById(id).classList.add("open"); }
 function closeModal(id) { document.getElementById(id).classList.remove("open"); }
-
 document.querySelectorAll(".modal-bg").forEach(bg => {
   bg.addEventListener("click", e => { if (e.target === bg) bg.classList.remove("open"); });
 });
-
 let toastTimer;
 function showToast(msg, isErr = false) {
   const t = document.getElementById("toast");
   t.textContent = msg;
   t.style.borderColor = isErr ? "#dc2626" : "var(--accent2)";
-  t.style.color       = isErr ? "#fca5a5" : "var(--accent2)";
+  t.style.color       = isErr ? "#dc2626" : "var(--accent2)";
   t.classList.add("show");
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove("show"), 2500);
 }
 
-// Init
 render();
 </script>
 </body>
