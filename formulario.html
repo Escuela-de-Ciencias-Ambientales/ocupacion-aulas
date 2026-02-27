@@ -1,118 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>window.addEventListener("load", function() {
+<head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Registro de Adecuaciones — EDECA</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg:      #f1f5f9;
-  --white:   #ffffff;
-  --border:  #e2e8f0;
-  --border2: #cbd5e1;
-  --text:    #0f172a;
-  --dim:     #64748b;
-  --blue:    #2563eb;
-  --blue-bg: #eff6ff;
-  --blue-mid:#bfdbfe;
-  --green:   #059669;
-  --green-bg:#f0fdf4;
-  --orange:  #d97706;
-  --orange-bg:#fffbeb;
-  --red:     #dc2626;
-  --red-bg:  #fef2f2;
-  --purple:  #7c3aed;
-  --purple-bg:#faf5ff;
-  --shadow:  0 2px 12px rgba(15,23,42,.07);
-  --shadow-lg:0 8px 32px rgba(15,23,42,.13);
-}
+:root{--bg:#f1f5f9;--white:#ffffff;--border:#e2e8f0;--border2:#cbd5e1;--text:#0f172a;--dim:#64748b;--blue:#2563eb;--blue-bg:#eff6ff;--blue-mid:#bfdbfe;--green:#059669;--green-bg:#f0fdf4;--orange:#d97706;--orange-bg:#fffbeb;--red:#dc2626;--red-bg:#fef2f2;--purple:#7c3aed;--purple-bg:#faf5ff;--shadow:0 2px 12px rgba(15,23,42,.07);--shadow-lg:0 8px 32px rgba(15,23,42,.13);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-body{
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:var(--bg);color:var(--text);
-  min-height:100vh;padding:2rem 1rem 6rem;
-}
-
-/* ── LOADING SCREEN ── */
-.loading-screen{
-  position:fixed;inset:0;background:var(--bg);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  z-index:999;transition:opacity .4s;
-}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem 6rem;}
+.loading-screen{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;transition:opacity .4s;}
 .loading-screen.hidden{opacity:0;pointer-events:none;}
-.loading-spinner{
-  width:44px;height:44px;border-radius:50%;
-  border:4px solid var(--blue-mid);
-  border-top-color:var(--blue);
-  animation:spin .8s linear infinite;
-  margin-bottom:1rem;
-}
+.loading-spinner{width:44px;height:44px;border-radius:50%;border:4px solid var(--blue-mid);border-top-color:var(--blue);animation:spin .8s linear infinite;margin-bottom:1rem;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .loading-text{font-size:.88rem;color:var(--dim);font-weight:500;}
 .loading-sub{font-size:.75rem;color:var(--border2);margin-top:.3rem;}
-
-/* ── ERROR SCREEN ── */
-.error-screen{
-  display:none;max-width:500px;margin:4rem auto;
-  text-align:center;padding:2.5rem;
-  background:var(--white);border-radius:16px;
-  border:1px solid var(--border);
-}
+.error-screen{display:none;max-width:500px;margin:4rem auto;text-align:center;padding:2.5rem;background:var(--white);border-radius:16px;border:1px solid var(--border);}
 .error-screen.show{display:block;}
-
-/* ── HEADER ── */
 .page-header{max-width:800px;margin:0 auto 2rem;}
-.header-card{
-  background:var(--white);border-radius:18px;
-  box-shadow:var(--shadow-lg);overflow:hidden;
-}
-.header-stripe{
-  height:7px;
-  background:linear-gradient(90deg,#1d4ed8,#2563eb,#7c3aed,#059669);
-}
+.header-card{background:var(--white);border-radius:18px;box-shadow:var(--shadow-lg);overflow:hidden;}
+.header-stripe{height:7px;background:linear-gradient(90deg,#1d4ed8,#2563eb,#7c3aed,#059669);}
 .header-body{padding:1.8rem 2rem 1.5rem;}
-.header-logo{
-  display:flex;align-items:center;justify-content:center;
-  gap:.6rem;margin-bottom:.9rem;
-}
-.logo-dot{
-  width:10px;height:10px;border-radius:50%;
-  background:var(--blue);box-shadow:0 0 10px rgba(37,99,235,.4);
-}
+.header-logo{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.9rem;}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--blue);box-shadow:0 0 10px rgba(37,99,235,.4);}
 .header-title{font-size:1.5rem;font-weight:700;color:var(--text);letter-spacing:-.02em;}
 .header-sub{font-size:.88rem;color:var(--dim);margin-top:.35rem;line-height:1.5;}
-
-/* ── SHEETS BADGE ── */
-.sheets-badge{
-  display:inline-flex;align-items:center;gap:.4rem;
-  margin-top:.8rem;padding:.35rem .85rem;
-  border-radius:999px;background:var(--green-bg);
-  border:1px solid #bbf7d0;font-size:.75rem;
-  color:var(--green);font-weight:600;
-}
-
-/* ── CARD ── */
-.card{
-  max-width:800px;margin:0 auto 1.2rem;
-  background:var(--white);border-radius:16px;
-  border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;
-}
-.card-head{
-  padding:.9rem 1.5rem;border-bottom:1px solid var(--border);
-  display:flex;align-items:center;gap:.7rem;background:#fafbfc;
-}
-.card-icon{
-  width:34px;height:34px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1rem;flex-shrink:0;
-}
+.sheets-badge{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;padding:.35rem .85rem;border-radius:999px;background:var(--green-bg);border:1px solid #bbf7d0;font-size:.75rem;color:var(--green);font-weight:600;}
+.card{max-width:800px;margin:0 auto 1.2rem;background:var(--white);border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;}
+.card-head{padding:.9rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.7rem;background:#fafbfc;}
+.card-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
 .card-title{font-weight:700;font-size:.9rem;}
 .card-sub{font-size:.74rem;color:var(--dim);margin-top:.1rem;}
 .card-body{padding:1.5rem;}
-
-/* ── FIELDS ── */
 .field{margin-bottom:1rem;}
 .field:last-child{margin-bottom:0;}
 .field-label{display:block;font-size:.79rem;font-weight:600;color:var(--text);margin-bottom:.38rem;}
@@ -120,624 +39,308 @@ body{
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
 .field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;}
 .field-hint{font-size:.72rem;color:var(--dim);margin-top:.3rem;}
-
-select.fi,input.fi,textarea.fi{
-  width:100%;padding:.62rem .95rem;
-  border:1.5px solid var(--border2);border-radius:9px;
-  font-family:'Plus Jakarta Sans',sans-serif;font-size:.87rem;
-  color:var(--text);background:var(--bg);outline:none;transition:all .2s;
-}
-select.fi{
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right .9rem center;
-  padding-right:2.3rem;
-}
-select.fi:focus,input.fi:focus,textarea.fi:focus{
-  border-color:var(--blue);background:var(--white);
-  box-shadow:0 0 0 3px rgba(37,99,235,.1);
-}
+select.fi,input.fi,textarea.fi{width:100%;padding:.62rem .95rem;border:1.5px solid var(--border2);border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:.87rem;color:var(--text);background:var(--bg);outline:none;transition:all .2s;}
+select.fi{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;padding-right:2.3rem;}
+select.fi:focus,input.fi:focus,textarea.fi:focus{border-color:var(--blue);background:var(--white);box-shadow:0 0 0 3px rgba(37,99,235,.1);}
 input.fi[readonly]{opacity:.65;cursor:not-allowed;background:var(--bg);}
 textarea.fi{min-height:70px;resize:vertical;}
-
-/* ── PROFESOR ── */
-.prof-select-wrap select.fi{
-  font-size:.95rem;font-weight:600;border-width:2px;border-color:var(--blue);
-  background-color:var(--white);box-shadow:0 0 0 4px rgba(37,99,235,.08);
-  padding:.75rem 2.5rem .75rem 1rem;
-}
-.loading-bar{
-  height:3px;background:var(--border);border-radius:999px;
-  overflow:hidden;margin-top:.5rem;display:none;
-}
+.prof-select-wrap select.fi{font-size:.95rem;font-weight:600;border-width:2px;border-color:var(--blue);background-color:var(--white);box-shadow:0 0 0 4px rgba(37,99,235,.08);padding:.75rem 2.5rem .75rem 1rem;}
+.loading-bar{height:3px;background:var(--border);border-radius:999px;overflow:hidden;margin-top:.5rem;display:none;}
 .loading-bar.show{display:block;}
-.loading-fill{
-  height:100%;width:0;border-radius:999px;
-  background:linear-gradient(90deg,var(--blue),var(--purple));
-  transition:width .5s ease;
-}
-.prof-tag{
-  display:none;margin-top:.6rem;padding:.45rem .9rem;border-radius:999px;
-  background:var(--blue-bg);border:1px solid var(--blue-mid);
-  font-size:.78rem;color:var(--blue);font-weight:600;
-  align-items:center;gap:.4rem;
-}
+.loading-fill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .5s ease;}
+.prof-tag{display:none;margin-top:.6rem;padding:.45rem .9rem;border-radius:999px;background:var(--blue-bg);border:1px solid var(--blue-mid);font-size:.78rem;color:var(--blue);font-weight:600;align-items:center;gap:.4rem;}
 .prof-tag.show{display:inline-flex;}
-
-/* ── PLACEHOLDER ── */
-.courses-placeholder{
-  max-width:800px;margin:0 auto 1.2rem;padding:2.5rem 1rem;
-  text-align:center;color:var(--dim);font-size:.88rem;
-  background:var(--white);border-radius:16px;
-  border:1.5px dashed var(--border2);
-}
+.courses-placeholder{max-width:800px;margin:0 auto 1.2rem;padding:2.5rem 1rem;text-align:center;color:var(--dim);font-size:.88rem;background:var(--white);border-radius:16px;border:1.5px dashed var(--border2);}
 .placeholder-icon{font-size:2.2rem;margin-bottom:.6rem;opacity:.35;}
-
-/* ── COURSE CARD ── */
-.course-card{
-  max-width:800px;margin:0 auto 1.2rem;
-  background:var(--white);border-radius:16px;
-  border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;
-  opacity:0;transform:translateY(14px);
-  transition:opacity .3s ease,transform .3s ease;
-}
+.course-card{max-width:800px;margin:0 auto 1.2rem;background:var(--white);border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .3s ease,transform .3s ease;}
 .course-card.visible{opacity:1;transform:translateY(0);}
-.course-head{
-  padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;
-  border-bottom:1px solid var(--border);
-  background:linear-gradient(135deg,#eff6ff,#f8fafc);
-}
-.course-num{
-  width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;
-  font-size:.82rem;font-weight:800;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
+.course-head{padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;border-bottom:1px solid var(--border);background:linear-gradient(135deg,#eff6ff,#f8fafc);}
+.course-num{width:34px;height:34px;border-radius:10px;background:var(--blue);color:#fff;font-size:.82rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .course-name-txt{font-weight:700;font-size:.93rem;color:var(--text);}
 .course-code-txt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--dim);margin-top:.12rem;}
 .course-pills{display:flex;gap:.4rem;margin-left:auto;flex-wrap:wrap;}
 .pill{padding:.2rem .65rem;border-radius:999px;font-size:.7rem;font-weight:700;white-space:nowrap;}
-.pill-blue  {background:var(--blue-bg);color:var(--blue);}
-.pill-green {background:var(--green-bg);color:var(--green);}
+.pill-blue{background:var(--blue-bg);color:var(--blue);}
+.pill-green{background:var(--green-bg);color:var(--green);}
 .pill-purple{background:var(--purple-bg);color:var(--purple);}
-.pill-grey  {background:#f1f5f9;color:var(--dim);}
+.pill-grey{background:#f1f5f9;color:var(--dim);}
 .course-body{padding:1.5rem;}
-
-.auto-notice{
-  padding:.5rem .85rem;background:var(--green-bg);border-radius:7px;
-  font-size:.73rem;color:var(--green);margin-bottom:1rem;
-  display:flex;align-items:center;gap:.4rem;
-}
-
-.sec-title{
-  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  padding-bottom:.5rem;border-bottom:2px solid;margin-bottom:.9rem;
-}
-.sec-blue {color:var(--blue);border-color:var(--blue-bg);}
-.sec-grey {color:var(--dim);border-color:var(--border);}
-
-/* ── STUDENTS ── */
-.student-row{
-  display:grid;grid-template-columns:1.8fr 1.1fr 1.3fr 34px;
-  gap:.6rem;align-items:end;padding:.75rem;border-radius:9px;
-  background:var(--bg);border:1px solid var(--border);margin-bottom:.6rem;
-}
+.auto-notice{padding:.5rem .85rem;background:var(--green-bg);border-radius:7px;font-size:.73rem;color:var(--green);margin-bottom:1rem;display:flex;align-items:center;gap:.4rem;}
+.sec-title{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding-bottom:.5rem;border-bottom:2px solid;margin-bottom:.9rem;}
+.sec-blue{color:var(--blue);border-color:var(--blue-bg);}
+.sec-grey{color:var(--dim);border-color:var(--border);}
+.student-row{display:grid;grid-template-columns:1.8fr 1.1fr 1.3fr 34px;gap:.6rem;align-items:end;padding:.75rem;border-radius:9px;background:var(--bg);border:1px solid var(--border);margin-bottom:.6rem;}
 .s-label{font-size:.71rem;font-weight:600;color:var(--dim);margin-bottom:.3rem;display:block;}
-.remove-btn{
-  width:32px;height:32px;border-radius:8px;border:none;
-  background:var(--red-bg);color:var(--red);cursor:pointer;font-size:.85rem;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;flex-shrink:0;align-self:flex-end;
-}
+.remove-btn{width:32px;height:32px;border-radius:8px;border:none;background:var(--red-bg);color:var(--red);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0;align-self:flex-end;}
 .remove-btn:hover{background:var(--red);color:#fff;}
-.add-student-btn{
-  display:inline-flex;align-items:center;gap:.4rem;
-  padding:.5rem .9rem;border-radius:8px;border:1.5px dashed var(--blue);
-  color:var(--blue);background:var(--blue-bg);font-size:.78rem;font-weight:600;
-  cursor:pointer;transition:all .2s;font-family:inherit;margin-top:.3rem;
-}
+.add-student-btn{display:inline-flex;align-items:center;gap:.4rem;padding:.5rem .9rem;border-radius:8px;border:1.5px dashed var(--blue);color:var(--blue);background:var(--blue-bg);font-size:.78rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit;margin-top:.3rem;}
 .add-student-btn:hover{background:var(--blue);color:#fff;}
-
-/* ── SUBMIT ── */
 .submit-wrap{max-width:800px;margin:1.5rem auto 0;}
-.submit-btn{
-  width:100%;padding:.95rem;border-radius:12px;border:none;
-  background:var(--blue);color:#fff;font-family:inherit;
-  font-size:.97rem;font-weight:700;cursor:pointer;
-  transition:all .2s;display:flex;align-items:center;
-  justify-content:center;gap:.5rem;
-  box-shadow:0 4px 20px rgba(37,99,235,.32);
-}
+.submit-btn{width:100%;padding:.95rem;border-radius:12px;border:none;background:var(--blue);color:#fff;font-family:inherit;font-size:.97rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 20px rgba(37,99,235,.32);}
 .submit-btn:hover{background:#1d4ed8;transform:translateY(-1px);}
 .submit-btn:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .submit-note{text-align:center;font-size:.74rem;color:var(--dim);margin-top:.6rem;}
-
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);
-  padding:.75rem 1.4rem;border-radius:10px;font-size:.85rem;font-weight:600;
-  opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap;
-  box-shadow:0 8px 24px rgba(15,23,42,.18);
-}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);padding:.75rem 1.4rem;border-radius:10px;font-size:.85rem;font-weight:600;opacity:0;transition:all .3s;z-index:9999;pointer-events:none;white-space:nowrap;box-shadow:0 8px 24px rgba(15,23,42,.18);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.toast.ok {background:var(--green);color:#fff;}
+.toast.ok{background:var(--green);color:#fff;}
 .toast.err{background:var(--red);color:#fff;}
-
-/* ── SUCCESS ── */
-.success-screen{
-  display:none;max-width:800px;margin:0 auto;text-align:center;
-  padding:3rem 2rem;background:var(--white);border-radius:18px;
-  border:1px solid var(--border);box-shadow:var(--shadow-lg);
-}
+.success-screen{display:none;max-width:800px;margin:0 auto;text-align:center;padding:3rem 2rem;background:var(--white);border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow-lg);}
 .success-screen.show{display:block;}
 .success-icon{font-size:3.5rem;margin-bottom:1rem;}
 .success-title{font-size:1.4rem;font-weight:700;color:var(--green);margin-bottom:.5rem;}
 .success-sub{font-size:.88rem;color:var(--dim);line-height:1.6;}
-.success-btn{
-  display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;
-  padding:.7rem 1.5rem;border-radius:10px;background:var(--blue);color:#fff;
-  font-family:inherit;font-size:.88rem;font-weight:700;border:none;
-  cursor:pointer;transition:all .2s;
-}
+.success-btn{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.5rem;padding:.7rem 1.5rem;border-radius:10px;background:var(--blue);color:#fff;font-family:inherit;font-size:.88rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;}
 .success-btn:hover{background:#1d4ed8;}
-
-@media(max-width:600px){
-  .field-row,.field-row-3{grid-template-columns:1fr;}
-  .student-row{grid-template-columns:1fr 1fr;}
-  .course-pills{display:none;}
-}
+@media(max-width:600px){.field-row,.field-row-3{grid-template-columns:1fr;}.student-row{grid-template-columns:1fr 1fr;}.course-pills{display:none;}}
 </style>
 </head>
 <body>
-
-<!-- ═══ LOADING SCREEN ═══ -->
 <div class="loading-screen" id="loading-screen">
   <div class="loading-spinner"></div>
   <div class="loading-text">Cargando datos desde la hoja de cálculo...</div>
   <div class="loading-sub">Esto toma solo unos segundos</div>
 </div>
-
-<!-- ═══ TOAST ═══ -->
 <div class="toast" id="toast"></div>
-
-<!-- ═══ ERROR SCREEN ═══ -->
 <div class="error-screen" id="error-screen">
   <div style="font-size:2.5rem;margin-bottom:1rem">⚠️</div>
   <div style="font-weight:700;font-size:1.1rem;margin-bottom:.5rem;color:var(--red)">No se pudo cargar la información</div>
-  <div style="font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:1.5rem">
-    Verifique su conexión a internet e intente recargar la página.<br>
-    Si el problema persiste, contacte al administrador del sistema.
-  </div>
-  <button class="submit-btn" style="max-width:200px;margin:0 auto" onclick="location.reload()">
-    🔄 Recargar página
-  </button>
+  <div style="font-size:.85rem;color:var(--dim);line-height:1.6;margin-bottom:1.5rem">Verifique su conexión e intente recargar la página.</div>
+  <button class="submit-btn" style="max-width:200px;margin:0 auto" onclick="location.reload()">🔄 Recargar</button>
 </div>
-
-<!-- ═══ MAIN CONTENT ═══ -->
 <div id="main-content" style="display:none">
-
-  <!-- HEADER -->
   <div class="page-header">
     <div class="header-card">
       <div class="header-stripe"></div>
       <div class="header-body">
-        <div class="header-logo">
-          <div class="logo-dot"></div>
-          <span style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">EDECA — UNA</span>
-          <div class="logo-dot"></div>
-        </div>
+        <div class="header-logo"><div class="logo-dot"></div><span style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);">EDECA — UNA</span><div class="logo-dot"></div></div>
         <div class="header-title">Registro de Adecuaciones Estudiantiles</div>
-        <div class="header-sub">
-          Seleccione el profesor para cargar automáticamente sus cursos del ciclo activo.<br>
-          Complete los estudiantes con adecuación en cada curso y envíe el formulario.
-        </div>
-        <div>
-          <span class="sheets-badge">✓ Datos sincronizados con Google Sheets</span>
-        </div>
+        <div class="header-sub">Seleccione el profesor para cargar automáticamente sus cursos del ciclo activo.</div>
+        <div><span class="sheets-badge">✓ Datos sincronizados con Google Sheets</span></div>
       </div>
     </div>
   </div>
-
-  <!-- CICLO -->
   <div class="card">
-    <div class="card-head">
-      <div class="card-icon" style="background:#eff6ff">📅</div>
-      <div>
-        <div class="card-title">Ciclo lectivo</div>
-        <div class="card-sub">Período correspondiente a esta notificación</div>
-      </div>
-    </div>
+    <div class="card-head"><div class="card-icon" style="background:#eff6ff">📅</div><div><div class="card-title">Ciclo lectivo</div><div class="card-sub">Período correspondiente a esta notificación</div></div></div>
     <div class="card-body">
       <div class="field-row">
-        <div class="field">
-          <label class="field-label">Ciclo <span class="req">*</span></label>
-          <select class="fi" id="ciclo">
-            <option value="">— Seleccione —</option>
-            <option value="I Ciclo (Ene-Jun)">I Ciclo (Enero – Junio)</option>
-            <option value="II Ciclo (Jul-Nov)">II Ciclo (Julio – Noviembre)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label class="field-label">Año <span class="req">*</span></label>
-          <select class="fi" id="anio">
-            <option value="">— Seleccione —</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-            <option value="2027">2027</option>
-          </select>
-        </div>
+        <div class="field"><label class="field-label">Ciclo <span class="req">*</span></label><select class="fi" id="ciclo"><option value="">— Seleccione —</option><option value="I Ciclo (Ene-Jun)">I Ciclo (Enero – Junio)</option><option value="II Ciclo (Jul-Nov)">II Ciclo (Julio – Noviembre)</option></select></div>
+        <div class="field"><label class="field-label">Año <span class="req">*</span></label><select class="fi" id="anio"><option value="">— Seleccione —</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select></div>
       </div>
     </div>
   </div>
-
-  <!-- PROFESOR -->
   <div class="card">
-    <div class="card-head">
-      <div class="card-icon" style="background:#f0fdf4">🧑‍🏫</div>
-      <div>
-        <div class="card-title">Seleccionar profesor</div>
-        <div class="card-sub">Lista cargada desde la hoja de cálculo — se actualiza automáticamente</div>
-      </div>
-    </div>
+    <div class="card-head"><div class="card-icon" style="background:#f0fdf4">🧑‍🏫</div><div><div class="card-title">Seleccionar profesor</div><div class="card-sub">Lista cargada desde Google Sheets — se actualiza automáticamente</div></div></div>
     <div class="card-body">
       <div class="field">
         <label class="field-label">Nombre del profesor <span class="req">*</span></label>
         <div class="prof-select-wrap">
-          <select class="fi" id="prof-select" onchange="onProfChange()">
-            <option value="">— Seleccione un profesor —</option>
-          </select>
-          <div class="loading-bar" id="loading-bar">
-            <div class="loading-fill" id="loading-fill"></div>
-          </div>
-          <div class="prof-tag" id="prof-tag">
-            <span>✓</span><span id="prof-tag-text"></span>
-          </div>
+          <select class="fi" id="prof-select" onchange="onProfChange()"><option value="">— Seleccione un profesor —</option></select>
+          <div class="loading-bar" id="loading-bar"><div class="loading-fill" id="loading-fill"></div></div>
+          <div class="prof-tag" id="prof-tag"><span>✓</span><span id="prof-tag-text"></span></div>
         </div>
-        <div class="field-hint">
-          Para agregar o modificar profesores, actualice la hoja "📋 Profesores" en Google Sheets
-        </div>
+        <div class="field-hint">Para modificar profesores o cursos, actualice la hoja de cálculo en Google Sheets</div>
       </div>
       <div class="field-row" id="prof-info" style="display:none">
-        <div class="field">
-          <label class="field-label">Correo institucional</label>
-          <input class="fi" type="text" id="prof-correo" readonly/>
-          <div class="field-hint">Cargado desde la hoja de datos</div>
-        </div>
-        <div class="field">
-          <label class="field-label">Departamento</label>
-          <input class="fi" type="text" id="prof-dept" readonly/>
-        </div>
+        <div class="field"><label class="field-label">Correo institucional</label><input class="fi" type="text" id="prof-correo" readonly/><div class="field-hint">Cargado desde la hoja de datos</div></div>
+        <div class="field"><label class="field-label">Departamento</label><input class="fi" type="text" id="prof-dept" readonly/></div>
       </div>
     </div>
   </div>
-
-  <!-- CURSOS -->
-  <div class="courses-placeholder" id="courses-placeholder">
-    <div class="placeholder-icon">👆</div>
-    <div>Seleccione un profesor para ver sus cursos asignados este ciclo</div>
-  </div>
+  <div class="courses-placeholder" id="courses-placeholder"><div class="placeholder-icon">👆</div><div>Seleccione un profesor para ver sus cursos asignados este ciclo</div></div>
   <div id="courses-container"></div>
-
-  <!-- SUBMIT -->
   <div class="submit-wrap" id="submit-wrap" style="display:none">
-    <button class="submit-btn" id="submit-btn" onclick="enviarFormulario()">
-      ✉ Enviar notificación al profesor
-    </button>
+    <button class="submit-btn" id="submit-btn" onclick="enviarFormulario()">✉ Enviar notificación al profesor</button>
     <div class="submit-note" id="submit-note"></div>
   </div>
-
-  <!-- SUCCESS -->
   <div class="success-screen" id="success-screen">
     <div class="success-icon">✅</div>
     <div class="success-title">¡Notificación enviada correctamente!</div>
     <div class="success-sub" id="success-sub"></div>
-    <button class="success-btn" onclick="resetForm()">📋 Registrar otro profesor</button>
+    <button class="success-btn" onclick="location.reload()">📋 Registrar otro profesor</button>
   </div>
-
-</div><!-- fin main-content -->
-
+</div>
 <script>
-// ══════════════════════════════════════════════════════
-// CONFIGURACIÓN
-// ══════════════════════════════════════════════════════
-const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWNj_Hxg62OKnqvglzGgayIX5hwtdrFuIiWqIyMW2nCYjBw4anZTrirKq57y_XXvsJRw/exec";
+var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyWNj_Hxg62OKnqvglzGgayIX5hwtdrFuIiWqIyMW2nCYjBw4anZTrirKq57y_XXvsJRw/exec";
+var TIPOS = ["No significativa","Significativa","De acceso"];
+var JORNADA_LABEL = {am:"Mañana",pm:"Tarde",ev:"Noche"};
+var JORNADA_PILL  = {am:"pill-blue",pm:"pill-green",ev:"pill-purple"};
+var DB = {};
+var currentProf = null;
+var studentCounts = {};
+var toastTimer;
 
-const TIPOS = ["No significativa", "Significativa", "De acceso"];
-const JORNADA_LABEL = {am:"Mañana", pm:"Tarde", ev:"Noche"};
-const JORNADA_PILL  = {am:"pill-blue", pm:"pill-green", ev:"pill-purple"};
-
-let DB = {};
-let currentProf = null;
-let studentCounts = {};
-
-// ══════════════════════════════════════════════════════
-// CARGA INICIAL DESDE GOOGLE SHEETS
-// ══════════════════════════════════════════════════════
 window.addEventListener("load", function() {
-  const cbName = "cb_" + Date.now();
+  var cbName = "jsonpCallback_" + Date.now();
+  var timeout = setTimeout(function() {
+    document.getElementById("loading-screen").classList.add("hidden");
+    document.getElementById("error-screen").classList.add("show");
+  }, 15000);
+
   window[cbName] = function(datos) {
+    clearTimeout(timeout);
     delete window[cbName];
     DB = datos;
     poblarSelectProfesor();
     document.getElementById("loading-screen").classList.add("hidden");
     document.getElementById("main-content").style.display = "block";
   };
-  const script = document.createElement("script");
-  script.onerror = function() {
+
+  var s = document.createElement("script");
+  s.src = APPS_SCRIPT_URL + "?action=datos&callback=" + cbName;
+  s.onerror = function() {
+    clearTimeout(timeout);
     document.getElementById("loading-screen").classList.add("hidden");
     document.getElementById("error-screen").classList.add("show");
   };
-  script.src = APPS_SCRIPT_URL + "?action=datos&callback=" + cbName;
-  document.head.appendChild(script);
+  document.head.appendChild(s);
 });
 
 function poblarSelectProfesor() {
-  const select = document.getElementById("prof-select");
-  const nombres = Object.keys(DB).sort();
-  nombres.forEach(function(nombre) {
-    const opt = document.createElement("option");
-    opt.value = nombre;
-    opt.textContent = nombre;
+  var select = document.getElementById("prof-select");
+  var nombres = Object.keys(DB).sort();
+  nombres.forEach(function(n) {
+    var opt = document.createElement("option");
+    opt.value = n; opt.textContent = n;
     select.appendChild(opt);
   });
 }
 
-// ══════════════════════════════════════════════════════
-// SELECCIÓN DE PROFESOR
-// ══════════════════════════════════════════════════════
 function onProfChange() {
-  const val = document.getElementById("prof-select").value;
-  const container = document.getElementById("courses-container");
-  const placeholder = document.getElementById("courses-placeholder");
-  const submitWrap = document.getElementById("submit-wrap");
-
-  container.innerHTML = "";
+  var val = document.getElementById("prof-select").value;
+  document.getElementById("courses-container").innerHTML = "";
   document.getElementById("prof-info").style.display = "none";
   document.getElementById("prof-tag").classList.remove("show");
-  submitWrap.style.display = "none";
-  studentCounts = {};
-  currentProf = null;
-
-  if (!val) {
-    placeholder.style.display = "block";
-    return;
-  }
-
-  placeholder.style.display = "none";
-
-  const bar  = document.getElementById("loading-bar");
-  const fill = document.getElementById("loading-fill");
-  bar.classList.add("show");
-  fill.style.width = "0%";
-  setTimeout(function() { fill.style.width = "75%"; }, 30);
-
-  setTimeout(function() {
+  document.getElementById("submit-wrap").style.display = "none";
+  studentCounts = {}; currentProf = null;
+  if (!val) { document.getElementById("courses-placeholder").style.display = "block"; return; }
+  document.getElementById("courses-placeholder").style.display = "none";
+  var bar = document.getElementById("loading-bar");
+  var fill = document.getElementById("loading-fill");
+  bar.classList.add("show"); fill.style.width = "0%";
+  setTimeout(function(){ fill.style.width = "75%"; }, 30);
+  setTimeout(function(){
     fill.style.width = "100%";
-    setTimeout(function() {
-      bar.classList.remove("show");
-      fill.style.width = "0%";
-      cargarProfesor(val);
-    }, 200);
+    setTimeout(function(){ bar.classList.remove("show"); fill.style.width = "0%"; cargarProfesor(val); }, 200);
   }, 400);
 }
 
 function cargarProfesor(nombre) {
   currentProf = DB[nombre];
   if (!currentProf) return;
-
   document.getElementById("prof-correo").value = currentProf.correo;
-  document.getElementById("prof-dept").value   = currentProf.dept;
+  document.getElementById("prof-dept").value = currentProf.dept;
   document.getElementById("prof-info").style.display = "grid";
-
-  document.getElementById("prof-tag-text").textContent =
-    currentProf.cursos.length + " curso(s) asignado(s) este ciclo";
+  document.getElementById("prof-tag-text").textContent = currentProf.cursos.length + " curso(s) asignado(s) este ciclo";
   document.getElementById("prof-tag").classList.add("show");
-
-  const container = document.getElementById("courses-container");
+  var container = document.getElementById("courses-container");
   currentProf.cursos.forEach(function(curso, i) {
     studentCounts[curso.codigo] = 1;
-    const card = crearCursoCard(curso, i);
+    var card = crearCursoCard(curso, i);
     container.appendChild(card);
-    setTimeout(function() { card.classList.add("visible"); }, 60 * (i + 1));
+    setTimeout(function(){ card.classList.add("visible"); }, 60*(i+1));
   });
-
   document.getElementById("submit-wrap").style.display = "block";
-  document.getElementById("submit-note").textContent =
-    "Se enviará un correo a " + currentProf.correo;
+  document.getElementById("submit-note").textContent = "Se enviará un correo a " + currentProf.correo;
 }
 
-// ══════════════════════════════════════════════════════
-// CREAR TARJETA DE CURSO
-// ══════════════════════════════════════════════════════
 function crearCursoCard(curso, idx) {
-  const card = document.createElement("div");
+  var card = document.createElement("div");
   card.className = "course-card";
-  const cid = curso.codigo.replace(/[^a-zA-Z0-9]/g, "");
-
-  const optsTipo = TIPOS.map(function(t) {
-    return '<option>' + t + '</option>';
-  }).join("");
-
-  card.innerHTML =
-    '<div class="course-head">'
-    + '<div class="course-num">' + (idx+1) + '</div>'
-    + '<div style="flex:1">'
-    + '<div class="course-name-txt">' + curso.nombre + '</div>'
-    + '<div class="course-code-txt">' + curso.codigo + ' · ' + curso.grupo + '</div>'
-    + '</div>'
-    + '<div class="course-pills">'
-    + '<span class="pill ' + (JORNADA_PILL[curso.jornada] || "pill-grey") + '">' + (JORNADA_LABEL[curso.jornada] || curso.jornada) + '</span>'
-    + '<span class="pill pill-grey">' + curso.aula + '</span>'
-    + '</div></div>'
-    + '<div class="course-body">'
-    + '<div class="auto-notice">✓ Datos cargados automáticamente desde Google Sheets</div>'
-    + '<div class="field-row-3" style="margin-bottom:1.2rem">'
-    + '<div class="field"><label class="field-label">Código / Grupo</label>'
-    + '<input class="fi" type="text" value="' + curso.codigo + ' / ' + curso.grupo + '" readonly/></div>'
-    + '<div class="field"><label class="field-label">Horario</label>'
-    + '<input class="fi" type="text" value="' + curso.horario + '" readonly/></div>'
-    + '<div class="field"><label class="field-label">Aula</label>'
-    + '<input class="fi" type="text" value="' + curso.aula + '" readonly/></div>'
-    + '</div>'
-    + '<div class="sec-title sec-blue">🎓 Estudiantes con adecuación</div>'
-    + '<div id="students-' + cid + '">'
-    + buildStudentRow(cid, 1, optsTipo)
-    + '</div>'
-    + '<button class="add-student-btn" onclick="addStudent(\'' + cid + '\')">'
-    + '＋ Agregar otro estudiante</button>'
-    + '<div class="sec-title sec-grey" style="margin-top:1.2rem">📝 Observaciones (opcional)</div>'
-    + '<textarea class="fi" id="obs-' + cid + '" placeholder="Indique cualquier detalle relevante..."></textarea>'
-    + '</div>';
-
+  var cid = curso.codigo.replace(/[^a-zA-Z0-9]/g,"");
+  var optsTipo = TIPOS.map(function(t){ return "<option>"+t+"</option>"; }).join("");
+  var jPill = JORNADA_PILL[curso.jornada] || "pill-grey";
+  var jLabel = JORNADA_LABEL[curso.jornada] || curso.jornada;
+  card.innerHTML = '<div class="course-head"><div class="course-num">'+(idx+1)+'</div><div style="flex:1"><div class="course-name-txt">'+curso.nombre+'</div><div class="course-code-txt">'+curso.codigo+' · '+curso.grupo+'</div></div><div class="course-pills"><span class="pill '+jPill+'">'+jLabel+'</span><span class="pill pill-grey">'+curso.aula+'</span></div></div>'
+    +'<div class="course-body"><div class="auto-notice">✓ Datos cargados automáticamente desde Google Sheets</div>'
+    +'<div class="field-row-3" style="margin-bottom:1.2rem"><div class="field"><label class="field-label">Código / Grupo</label><input class="fi" type="text" value="'+curso.codigo+' / '+curso.grupo+'" readonly/></div><div class="field"><label class="field-label">Horario</label><input class="fi" type="text" value="'+curso.horario+'" readonly/></div><div class="field"><label class="field-label">Aula</label><input class="fi" type="text" value="'+curso.aula+'" readonly/></div></div>'
+    +'<div class="sec-title sec-blue">🎓 Estudiantes con adecuación</div>'
+    +'<div id="students-'+cid+'">'+buildStudentRow(cid,1,optsTipo)+'</div>'
+    +'<button class="add-student-btn" onclick="addStudent(\''+cid+'\')">＋ Agregar otro estudiante</button>'
+    +'<div class="sec-title sec-grey" style="margin-top:1.2rem">📝 Observaciones (opcional)</div>'
+    +'<textarea class="fi" id="obs-'+cid+'" placeholder="Indique cualquier detalle relevante..."></textarea>'
+    +'</div>';
   card._cursoData = curso;
   return card;
 }
 
 function buildStudentRow(cid, num, optsTipo) {
-  if (!optsTipo) optsTipo = TIPOS.map(function(t){ return '<option>'+t+'</option>'; }).join("");
-  return '<div class="student-row" id="sr-' + cid + '-' + num + '">'
-    + '<div><span class="s-label">Nombre completo</span>'
-    + '<input class="fi" type="text" placeholder="Apellidos, Nombre" id="sn-' + cid + '-' + num + '"/></div>'
-    + '<div><span class="s-label">Carné</span>'
-    + '<input class="fi" type="text" placeholder="20XX-XXXX" id="sc-' + cid + '-' + num + '"/></div>'
-    + '<div><span class="s-label">Tipo de adecuación</span>'
-    + '<select class="fi" id="st-' + cid + '-' + num + '">' + optsTipo + '</select></div>'
-    + '<button class="remove-btn" onclick="removeStudent(\'' + cid + '\',' + num + ')" title="Eliminar">✕</button>'
-    + '</div>';
+  if (!optsTipo) optsTipo = TIPOS.map(function(t){ return "<option>"+t+"</option>"; }).join("");
+  return '<div class="student-row" id="sr-'+cid+'-'+num+'">'
+    +'<div><span class="s-label">Nombre completo</span><input class="fi" type="text" placeholder="Apellidos, Nombre" id="sn-'+cid+'-'+num+'"/></div>'
+    +'<div><span class="s-label">Carné</span><input class="fi" type="text" placeholder="20XX-XXXX" id="sc-'+cid+'-'+num+'"/></div>'
+    +'<div><span class="s-label">Tipo de adecuación</span><select class="fi" id="st-'+cid+'-'+num+'">'+optsTipo+'</select></div>'
+    +'<button class="remove-btn" onclick="removeStudent(\''+cid+'\','+num+')" title="Eliminar">✕</button>'
+    +'</div>';
 }
 
 function addStudent(cid) {
   if (!studentCounts[cid]) studentCounts[cid] = 1;
   studentCounts[cid]++;
-  const n = studentCounts[cid];
-  const container = document.getElementById("students-" + cid);
-  const tmp = document.createElement("div");
+  var n = studentCounts[cid];
+  var container = document.getElementById("students-"+cid);
+  var tmp = document.createElement("div");
   tmp.innerHTML = buildStudentRow(cid, n);
-  const row = tmp.firstElementChild;
-  row.style.opacity = "0";
-  row.style.transform = "translateY(8px)";
+  var row = tmp.firstElementChild;
+  row.style.opacity = "0"; row.style.transform = "translateY(8px)";
   container.appendChild(row);
-  setTimeout(function() {
-    row.style.transition = "opacity .25s,transform .25s";
-    row.style.opacity = "1";
-    row.style.transform = "translateY(0)";
-  }, 20);
+  setTimeout(function(){ row.style.transition="opacity .25s,transform .25s"; row.style.opacity="1"; row.style.transform="translateY(0)"; }, 20);
 }
 
 function removeStudent(cid, num) {
-  const row = document.getElementById("sr-" + cid + "-" + num);
+  var row = document.getElementById("sr-"+cid+"-"+num);
   if (!row) return;
-  const container = document.getElementById("students-" + cid);
-  if (container.children.length <= 1) {
-    showToast("Debe haber al menos un estudiante por curso", "err");
-    return;
-  }
-  row.style.transition = "opacity .2s";
-  row.style.opacity = "0";
-  setTimeout(function() { row.remove(); }, 200);
+  var container = document.getElementById("students-"+cid);
+  if (container.children.length <= 1) { showToast("Debe haber al menos un estudiante","err"); return; }
+  row.style.transition = "opacity .2s"; row.style.opacity = "0";
+  setTimeout(function(){ row.remove(); }, 200);
 }
 
-// ══════════════════════════════════════════════════════
-// ENVIAR FORMULARIO
-// ══════════════════════════════════════════════════════
 function enviarFormulario() {
-  const ciclo      = document.getElementById("ciclo").value;
-  const anio       = document.getElementById("anio").value;
-  const profNombre = document.getElementById("prof-select").value;
-
-  if (!ciclo || !anio) { showToast("Seleccione el ciclo y el año", "err"); return; }
-  if (!profNombre)     { showToast("Seleccione un profesor", "err"); return; }
-
-  const cursos = [];
-  let hayEstudiantes = false;
-
+  var ciclo = document.getElementById("ciclo").value;
+  var anio  = document.getElementById("anio").value;
+  var profNombre = document.getElementById("prof-select").value;
+  if (!ciclo||!anio) { showToast("Seleccione el ciclo y el año","err"); return; }
+  if (!profNombre)   { showToast("Seleccione un profesor","err"); return; }
+  var cursos = []; var hayEstudiantes = false;
   currentProf.cursos.forEach(function(curso) {
-    const cid = curso.codigo.replace(/[^a-zA-Z0-9]/g, "");
-    const container = document.getElementById("students-" + cid);
+    var cid = curso.codigo.replace(/[^a-zA-Z0-9]/g,"");
+    var container = document.getElementById("students-"+cid);
     if (!container) return;
-
-    const estudiantes = [];
+    var estudiantes = [];
     Array.from(container.children).forEach(function(row) {
-      const parts = row.id.split("-");
-      const num = parts[parts.length - 1];
-      const nombre = document.getElementById("sn-" + cid + "-" + num);
-      const carne  = document.getElementById("sc-" + cid + "-" + num);
-      const tipo   = document.getElementById("st-" + cid + "-" + num);
+      var num = row.id.split("-").pop();
+      var nombre = document.getElementById("sn-"+cid+"-"+num);
+      var carne  = document.getElementById("sc-"+cid+"-"+num);
+      var tipo   = document.getElementById("st-"+cid+"-"+num);
       if (nombre && nombre.value.trim()) {
-        estudiantes.push({
-          nombre: nombre.value.trim(),
-          carne:  carne ? carne.value.trim() : "",
-          tipo:   tipo  ? tipo.value : "No significativa"
-        });
+        estudiantes.push({nombre:nombre.value.trim(), carne:carne?carne.value.trim():"", tipo:tipo?tipo.value:"No significativa"});
         hayEstudiantes = true;
       }
     });
-
-    if (estudiantes.length > 0) {
-      cursos.push({
-        codigo:  curso.codigo,
-        nombre:  curso.nombre,
-        grupo:   curso.grupo,
-        horario: curso.horario,
-        aula:    curso.aula,
-        estudiantes: estudiantes
-      });
-    }
+    if (estudiantes.length > 0) cursos.push({codigo:curso.codigo,nombre:curso.nombre,grupo:curso.grupo,horario:curso.horario,aula:curso.aula,estudiantes:estudiantes});
   });
-
-  if (!hayEstudiantes) {
-    showToast("Ingrese al menos un estudiante con adecuación", "err");
-    return;
-  }
-
-  const btn = document.getElementById("submit-btn");
-  btn.disabled = true;
-  btn.innerHTML = "⏳ Enviando...";
-
+  if (!hayEstudiantes) { showToast("Ingrese al menos un estudiante","err"); return; }
+  var btn = document.getElementById("submit-btn");
+  btn.disabled = true; btn.innerHTML = "⏳ Enviando...";
   fetch(APPS_SCRIPT_URL, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({
-      ciclo:    ciclo,
-      anio:     anio,
-      profesor: profNombre,
-      correo:   currentProf.correo,
-      cursos:   cursos
-    })
-  })
-  .then(function() {
-    mostrarExito(profNombre, currentProf.correo, cursos.length);
-  })
-  .catch(function() {
-    btn.disabled = false;
-    btn.innerHTML = "✉ Enviar notificación al profesor";
-    showToast("Error al enviar. Intente de nuevo.", "err");
+    method:"POST", mode:"no-cors",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({ciclo:ciclo,anio:anio,profesor:profNombre,correo:currentProf.correo,cursos:cursos})
+  }).then(function() {
+    document.querySelectorAll(".card,.courses-placeholder,.course-card,#courses-container,#submit-wrap").forEach(function(el){ el.style.display="none"; });
+    document.getElementById("success-sub").innerHTML = 'Correo enviado a <strong>'+currentProf.correo+'</strong><br>con la información de <strong>'+cursos.length+' curso(s)</strong>.<br><br>El registro quedó guardado en el historial.';
+    document.getElementById("success-screen").classList.add("show");
+  }).catch(function() {
+    btn.disabled=false; btn.innerHTML="✉ Enviar notificación al profesor";
+    showToast("Error al enviar. Intente de nuevo.","err");
   });
 }
 
-function mostrarExito(profesor, correo, numCursos) {
-  document.querySelectorAll(".card, .courses-placeholder, .course-card, #courses-container, #submit-wrap")
-    .forEach(function(el) { el.style.display = "none"; });
-
-  document.getElementById("success-sub").innerHTML =
-    'El correo fue enviado a <strong>' + correo + '</strong><br>'
-    + 'con la información de <strong>' + numCursos + ' curso(s)</strong> y sus estudiantes con adecuación.<br><br>'
-    + 'El registro quedó guardado automáticamente en la hoja de historial.';
-  document.getElementById("success-screen").classList.add("show");
-}
-
-function resetForm() { location.reload(); }
-
-// ══════════════════════════════════════════════════════
-// UTILS
-// ══════════════════════════════════════════════════════
-let toastTimer;
 function showToast(msg, type) {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast " + type + " show";
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.className = "toast "+type+" show";
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(function() { t.classList.remove("show"); }, 3000);
+  toastTimer = setTimeout(function(){ t.classList.remove("show"); }, 3000);
 }
 </script>
 </body>
